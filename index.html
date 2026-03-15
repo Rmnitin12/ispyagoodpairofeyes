@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Spy a Good Pair of Eyes — Giving the Gift of Clear Vision</title>
+<meta name="description" content="A youth-led nonprofit based in Lamorinda, CA that collects donated eyeglasses and distributes them to underserved communities worldwide through international vision drives.">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1A2B3C;
+  background: #FAFAFA;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { font-family: 'Inter', sans-serif; cursor: pointer; border: none; }
+input, textarea { font-family: 'Inter', sans-serif; }
+
+/* ========== DESIGN TOKENS ========== */
+:root {
+  --primary: #2A7FBF;
+  --primary-dark: #1E6499;
+  --secondary: #F5A623;
+  --accent: #3DBF8C;
+  --bg: #FAFAFA;
+  --dark: #1A2B3C;
+  --light-gray: #F0F4F8;
+  --radius-card: 16px;
+  --radius-btn: 10px;
+  --shadow: 0 4px 24px rgba(26,43,60,0.08);
+  --shadow-lg: 0 12px 48px rgba(26,43,60,0.14);
+  --shadow-glow: 0 0 40px rgba(42,127,191,0.15);
+  --transition: 0.3s ease;
+}
+
+/* ========== CURSOR GLOW ========== */
+.cursor-glow {
+  position: fixed; width: 600px; height: 600px; border-radius: 50%;
+  pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(42,127,191,0.06) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease, top 0.3s ease;
+}
+
+/* ========== SCROLL PROGRESS BAR ========== */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 10000;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+  width: 0%;
+}
+
+/* ========== NAVIGATION ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
+  padding: 1.1rem 2rem;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.navbar.scrolled {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 30px rgba(26,43,60,0.08);
+  padding: 0.6rem 2rem;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; z-index: 100; }
+.nav-logo img { height: 38px; width: auto; }
+.navbar.scrolled .nav-logo img { height: 32px; }
+.nav-logo span {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem); color: var(--dark);
+  white-space: nowrap;
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.9rem; font-weight: 500; color: var(--dark);
+  position: relative; transition: color var(--transition);
+  padding: 0.3rem 0;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  width: 0; height: 2px; background: var(--primary);
+  transition: width var(--transition), left var(--transition);
+  border-radius: 1px;
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-links a:hover::after { width: 100%; left: 0; }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; z-index: 100; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 26px; height: 2.5px; background: var(--dark);
+  border-radius: 2px; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  background: rgba(255,255,255,0.98); backdrop-filter: blur(24px);
+  padding: 6rem 2rem 2rem; flex-direction: column; gap: 0.3rem;
+  transform: translateY(-100%); transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  z-index: 99;
+}
+.mobile-menu.open { transform: translateY(0); }
+.mobile-menu a {
+  font-size: 1.5rem; font-weight: 700; padding: 1rem 0;
+  color: var(--dark); font-family: 'Playfair Display', serif;
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.mobile-menu.open a {
+  opacity: 1; transform: translateX(0);
+}
+.mobile-menu.open a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.open a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu.open a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu.open a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu.open a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu.open a:nth-child(6) { transition-delay: 0.35s; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 2rem; border-radius: var(--radius-btn);
+  font-weight: 600; font-size: 0.95rem;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1); cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: var(--primary); color: #fff; border: 2px solid var(--primary);
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(42,127,191,0.35); border-color: var(--primary-dark); background: var(--primary-dark); }
+.btn-secondary {
+  background: rgba(255,255,255,0.9); color: var(--primary); border: 2px solid var(--primary);
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(42,127,191,0.25); }
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  position: relative; overflow: hidden; padding: 6rem 2rem 3rem;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg, #e8f4fd 0%, #d4f0e7 25%, #fef9e7 50%, #e8f4fd 75%, #d4f0e7 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Particle canvas */
+#hero-particles {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 850px; }
+.hero h1 {
+  font-size: clamp(2.4rem, 6.5vw, 4.5rem); font-weight: 900;
+  color: var(--dark); margin-bottom: 1.2rem;
+  letter-spacing: -0.03em;
+  animation: heroTextIn 0.8s ease-out 0.5s both;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes heroTextIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero p {
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem); color: #4a5568;
+  max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.8;
+  animation: heroTextIn 0.8s ease-out 0.7s both;
+}
+.hero-buttons {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: heroTextIn 0.8s ease-out 0.9s both;
+}
+
+/* Stats Bar */
+.stats-bar {
+  position: relative; z-index: 2; margin-top: 4rem;
+  display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+  padding: 2rem 3rem; border-radius: var(--radius-card);
+  box-shadow: var(--shadow), var(--shadow-glow);
+  animation: heroTextIn 0.8s ease-out 1.1s both;
+}
+.stat-item { text-align: center; min-width: 130px; }
+.stat-number {
+  font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label { font-size: 0.82rem; color: #94a3b8; font-weight: 600; margin-top: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-divider { width: 1px; background: #e2e8f0; align-self: stretch; }
+
+/* ========== SECTIONS ========== */
+.section { padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 4vw, 2rem); }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--primary); text-align: center;
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800;
+  text-align: center; margin-bottom: 1rem; color: var(--dark);
+}
+.section-subtitle {
+  text-align: center; max-width: 620px; margin: 0 auto 3.5rem;
+  color: #64748b; font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+/* ========== MISSION ========== */
+.mission-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+}
+@media (max-width: 768px) { .mission-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+.mission-text h2 {
+  font-size: clamp(2rem, 4vw, 2.6rem); margin-bottom: 1.5rem; font-weight: 800;
+}
+.mission-text p { color: #4a5568; margin-bottom: 1.2rem; font-size: 1.02rem; }
+.pull-quote {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+  font-weight: 600; font-style: italic;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  border-left: 4px solid var(--secondary); padding: 1.2rem 0 1.2rem 1.5rem;
+  margin: 2rem 0;
+}
+.mission-visual {
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
+}
+.mission-illustration {
+  width: 80%; max-width: 380px;
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.mission-visual::before {
+  content: ''; position: absolute;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,127,191,0.08), transparent 70%);
+  z-index: -1;
+}
+
+/* ========== HOW IT WORKS ========== */
+.how-bg { background: var(--light-gray); position: relative; overflow: hidden; }
+.how-bg::before {
+  content: ''; position: absolute; top: -100px; right: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,127,191,0.06), transparent 70%);
+}
+.steps-container {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  position: relative;
+}
+@media (max-width: 768px) { .steps-container { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+.step-card {
+  background: #fff; border-radius: var(--radius-card); padding: 2.5rem 2rem;
+  text-align: center; box-shadow: var(--shadow); position: relative;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.step-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg), var(--shadow-glow); }
+.step-number {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff; font-weight: 800; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 15px rgba(42,127,191,0.3);
+}
+.step-icon { margin-bottom: 1rem; }
+.step-icon svg { width: 64px; height: 64px; margin: 0 auto; }
+.step-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; }
+.step-card p { color: #64748b; font-size: 0.95rem; line-height: 1.7; }
+
+/* Step connector line (desktop) */
+@media (min-width: 769px) {
+  .steps-container::before {
+    content: ''; position: absolute; top: 50px;
+    left: calc(33.33% - 1rem); right: calc(33.33% - 1rem);
+    height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent));
+    opacity: 0.2; z-index: 0;
+  }
+}
+
+/* ========== WORLD MAP SECTION ========== */
+.drives-section { position: relative; overflow: hidden; }
+.map-container {
+  position: relative; width: 100%; max-width: 900px; margin: 0 auto 3rem;
+  aspect-ratio: 2 / 1;
+}
+#world-map { width: 100%; height: 100%; }
+
+/* Flight path animations */
+.flight-path { fill: none; stroke-dasharray: 8 6; opacity: 0.4; }
+
+/* Map marker interactions — no CSS transform (conflicts with SVG transform attribute) */
+.map-marker-clickable { cursor: pointer; }
+.map-marker-clickable:hover .marker-ring { opacity: 0.6 !important; }
+.map-label { pointer-events: none; }
+
+.drives-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; position: relative; z-index: 1;
+}
+@media (max-width: 900px) { .drives-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; } }
+.drive-card {
+  background: #fff; border-radius: var(--radius-card); overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.drive-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.drive-card.upcoming {
+  border: 2px solid var(--secondary);
+  box-shadow: 0 0 0 4px rgba(245,166,35,0.12), var(--shadow);
+}
+.drive-card-header {
+  padding: 2rem 2rem 0.8rem; display: flex; align-items: center; gap: 1rem;
+}
+.drive-flag { font-size: 2.2rem; }
+.drive-card-header h3 { font-size: 1.25rem; flex: 1; }
+.drive-badge {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 0.3rem 0.75rem; border-radius: 20px;
+  white-space: nowrap;
+}
+.badge-completed { background: #e8f5e9; color: #2e7d32; }
+.badge-upcoming {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100;
+  animation: badgePulse 2s ease infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(245,166,35,0); }
+}
+.drive-card-body { padding: 0.5rem 2rem 1.2rem; }
+.drive-card-body p { color: #64748b; font-size: 0.95rem; }
+
+/* Drive card hero image (legacy fallback) */
+.drive-hero-img { width: 100%; height: 220px; object-fit: cover; object-position: center 30%; }
+
+.drive-expand {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), padding 0.6s;
+  padding: 0 2rem; background: var(--light-gray);
+}
+.drive-expand.open { max-height: 800px; padding: 1.5rem 2rem; }
+.drive-expand p { color: #4a5568; font-size: 0.93rem; line-height: 1.8; margin-bottom: 1rem; }
+
+/* Photo gallery inside drive expand */
+.drive-gallery {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.drive-gallery img {
+  width: 100%; height: 100px; object-fit: cover;
+  border-radius: 8px; cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+  filter: brightness(0.95);
+}
+.drive-gallery img:hover {
+  transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  filter: brightness(1); z-index: 2; position: relative;
+}
+@media (max-width: 600px) {
+  .drive-gallery { grid-template-columns: repeat(2, 1fr); }
+  .drive-gallery img { height: 90px; }
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 99999;
+  background: rgba(0,0,0,0.9); display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem; cursor: pointer;
+  animation: lbFadeIn 0.3s ease;
+}
+.lightbox.active { display: flex; }
+@keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox img {
+  max-width: 90vw; max-height: 85vh; object-fit: contain;
+  border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: none;
+  color: #fff; font-size: 1.5rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.3); }
+.drive-toggle {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.8rem; font-size: 0.85rem; font-weight: 600;
+  color: var(--primary); background: none; width: 100%;
+  transition: background var(--transition);
+}
+.drive-toggle:hover { background: var(--light-gray); }
+.drive-toggle svg {
+  width: 18px; height: 18px; margin-left: 0.4rem;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.drive-card.expanded .drive-toggle svg { transform: rotate(180deg); }
+
+/* ========== GET INVOLVED ========== */
+.involve-bg { background: var(--light-gray); position: relative; overflow: hidden; }
+.involve-bg::after {
+  content: ''; position: absolute; bottom: -150px; left: -100px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,166,35,0.06), transparent 70%);
+}
+.involve-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.involve-card {
+  background: #fff; border-radius: var(--radius-card); padding: 2.5rem 2rem;
+  text-align: center; box-shadow: var(--shadow);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  border: 1px solid rgba(0,0,0,0.04);
+  position: relative; overflow: hidden;
+}
+.involve-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: scaleX(0); transition: transform 0.4s; transform-origin: left;
+}
+.involve-card:hover::before { transform: scaleX(1); }
+.involve-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.involve-icon {
+  margin-bottom: 1.5rem; width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(42,127,191,0.08), rgba(61,191,140,0.08));
+  display: flex; align-items: center; justify-content: center;
+  margin-left: auto; margin-right: auto;
+}
+.involve-icon svg { width: 34px; height: 34px; }
+.involve-card h3 { font-size: 1.25rem; margin-bottom: 0.8rem; }
+.involve-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+/* ========== IMPACT ========== */
+.impact-section {
+  background: var(--dark); color: #fff; position: relative; overflow: hidden;
+}
+.impact-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(42,127,191,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(61,191,140,0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 20%, rgba(245,166,35,0.06) 0%, transparent 50%);
+}
+/* Animated grid pattern */
+.impact-grid-bg {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.impact-stats {
+  display: flex; justify-content: center; gap: clamp(2rem, 6vw, 4rem);
+  flex-wrap: wrap; margin-bottom: 3.5rem; position: relative; z-index: 1;
+}
+.impact-stat { text-align: center; }
+.impact-stat .stat-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, var(--secondary), #ffcc5c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.impact-stat .stat-label { color: rgba(255,255,255,0.5); }
+.impact-callout {
+  max-width: 700px; margin: 0 auto 3rem; text-align: center;
+  position: relative; z-index: 1;
+}
+.impact-callout p {
+  font-size: clamp(1.05rem, 2vw, 1.15rem); color: rgba(255,255,255,0.8); line-height: 1.8;
+}
+.impact-callout strong { color: var(--secondary); font-weight: 700; }
+.callout-box {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-card); padding: 2rem 2.5rem; margin-top: 2rem;
+  backdrop-filter: blur(10px);
+}
+.callout-box h4 {
+  color: var(--secondary); font-size: 1.1rem; margin-bottom: 0.6rem;
+  font-family: 'Inter', sans-serif; font-weight: 700;
+}
+.callout-box p { font-size: 0.95rem; color: rgba(255,255,255,0.65); }
+
+/* Timeline */
+.timeline-label {
+  color: rgba(255,255,255,0.35); text-align: center;
+  font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem;
+}
+.timeline {
+  position: relative; z-index: 1; max-width: 800px; margin: 0 auto;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.timeline::-webkit-scrollbar { height: 4px; }
+.timeline::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 2px; }
+.timeline::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.timeline-inner {
+  display: flex; min-width: max-content; padding: 2rem 3rem 1.5rem;
+}
+.timeline-item {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 180px; position: relative; padding: 0 1rem;
+}
+.timeline-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--secondary); border: 3px solid var(--dark);
+  position: relative; z-index: 2;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.timeline-item:hover .timeline-dot { transform: scale(1.4); box-shadow: 0 0 15px rgba(245,166,35,0.5); }
+.timeline-item::before {
+  content: ''; position: absolute; top: 7px; left: 0; right: 0;
+  height: 2px; background: rgba(255,255,255,0.1); z-index: 1;
+}
+.timeline-item:first-child::before { left: 50%; }
+.timeline-item:last-child::before { right: 50%; }
+.timeline-year {
+  font-weight: 700; font-size: 1rem; color: var(--secondary);
+  margin-top: 0.8rem;
+}
+.timeline-desc {
+  font-size: 0.8rem; color: rgba(255,255,255,0.5);
+  text-align: center; margin-top: 0.3rem; max-width: 145px;
+}
+
+/* ========== CONTACT ========== */
+.contact-section { background: #fff; }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+}
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+.contact-info h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+.contact-info p { color: #64748b; margin-bottom: 1rem; font-size: 0.98rem; }
+.contact-method {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.2rem; background: var(--light-gray);
+  border-radius: var(--radius-btn); margin-bottom: 0.8rem;
+  transition: all var(--transition);
+}
+.contact-method:hover { background: #e8f0f8; transform: translateX(4px); }
+.contact-method-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--primary); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-method-icon svg { width: 18px; height: 18px; }
+.contact-method-text { font-size: 0.92rem; }
+.contact-method-text strong { display: block; font-size: 0.78rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Inter', sans-serif; }
+.contact-method-text a { color: var(--dark); font-weight: 600; }
+
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-weight: 600; font-size: 0.88rem; color: var(--dark); }
+.form-group input, .form-group textarea {
+  padding: 0.85rem 1.1rem; border: 2px solid #e2e8f0; border-radius: var(--radius-btn);
+  font-size: 0.95rem; transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none; resize: vertical; background: var(--light-gray);
+}
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 4px rgba(42,127,191,0.1);
+  background: #fff;
+}
+.form-group .error { border-color: #e53e3e; }
+.error-msg { font-size: 0.8rem; color: #e53e3e; display: none; }
+.form-success {
+  display: none; background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  color: #2e7d32; padding: 1.5rem; border-radius: var(--radius-btn);
+  font-weight: 600; text-align: center; border: 1px solid #c8e6c9;
+}
+.form-success.show { display: block; animation: fadeInUp 0.5s ease; }
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--dark); color: rgba(255,255,255,0.6); padding: 4rem 2rem 1.5rem;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+@media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr; gap: 2rem; } }
+.footer-brand { display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 340px; }
+.footer-links h4 {
+  color: #fff; font-size: 0.88rem; margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.footer-links a {
+  display: block; font-size: 0.88rem; padding: 0.3rem 0;
+  transition: color var(--transition), transform var(--transition);
+}
+.footer-links a:hover { color: var(--secondary); transform: translateX(4px); }
+.footer-bottom {
+  max-width: 1100px; margin: 0 auto; padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem;
+}
+
+/* ========== BACK TO TOP ========== */
+.back-to-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9000;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--primary); color: #fff; border: none;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(42,127,191,0.35);
+  opacity: 0; transform: translateY(20px) scale(0.8);
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.back-to-top.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+.back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px) scale(1.05); }
+.back-to-top svg { width: 22px; height: 22px; }
+
+/* ========== ANIMATIONS ========== */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== ANIMATED SVG GLASSES LINE DRAW ========== */
+.hero-glasses-svg {
+  position: absolute; z-index: 1; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(500px, 70vw, 900px); height: auto;
+  opacity: 0.04; pointer-events: none;
+}
+.hero-glasses-svg path {
+  stroke-dasharray: 1000; stroke-dashoffset: 1000;
+  animation: drawGlasses 3s ease-out 0.5s forwards;
+}
+@keyframes drawGlasses {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ========== MARQUEE TICKER ========== */
+.marquee-section {
+  background: var(--dark); overflow: hidden; padding: 1rem 0;
+  position: relative;
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0 2.5rem; white-space: nowrap;
+  color: rgba(255,255,255,0.7); font-size: 0.88rem; font-weight: 500;
+}
+.marquee-item span { color: var(--secondary); font-size: 1.1rem; }
+
+/* ========== 3D TILT CARDS ========== */
+.tilt-card {
+  transform-style: preserve-3d; perspective: 1000px;
+}
+.tilt-card-inner {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+}
+.tilt-card .tilt-shine {
+  position: absolute; inset: 0; border-radius: var(--radius-card);
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 60%);
+  opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 5;
+}
+.tilt-card:hover .tilt-shine { opacity: 1; }
+
+/* ========== WAVE SECTION DIVIDERS ========== */
+.wave-divider {
+  position: relative; width: 100%; overflow: hidden;
+  line-height: 0; margin-top: -1px;
+}
+.wave-divider svg {
+  display: block; width: 100%; height: clamp(40px, 6vw, 80px);
+}
+.wave-divider-flip { transform: rotate(180deg); margin-bottom: -1px; margin-top: 0; }
+
+/* ========== KEN BURNS on drive hero images ========== */
+.drive-hero-wrap {
+  overflow: hidden; position: relative;
+  height: 220px;
+}
+.drive-hero-wrap img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+  transition: transform 8s ease;
+  will-change: transform;
+}
+.drive-card:hover .drive-hero-wrap img {
+  transform: scale(1.08);
+}
+.drive-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ========== ANIMATED GRADIENT BORDER on Zimbabwe ========== */
+.drive-card.upcoming {
+  border: none !important;
+  position: relative;
+  background: #fff;
+}
+.drive-card.upcoming::before {
+  content: ''; position: absolute; inset: -2px;
+  border-radius: calc(var(--radius-card) + 2px);
+  background: linear-gradient(60deg, var(--secondary), #ffcc5c, var(--accent), var(--secondary), #ffcc5c);
+  background-size: 300% 300%;
+  animation: gradientBorder 4s ease infinite;
+  z-index: -1;
+}
+@keyframes gradientBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========== SPLIT TEXT REVEAL ========== */
+.split-reveal .word {
+  display: inline-block; overflow: hidden; vertical-align: top;
+}
+.split-reveal .word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.split-reveal.visible .word-inner {
+  transform: translateY(0);
+}
+.split-reveal .word:nth-child(1) .word-inner { transition-delay: 0.0s; }
+.split-reveal .word:nth-child(2) .word-inner { transition-delay: 0.04s; }
+.split-reveal .word:nth-child(3) .word-inner { transition-delay: 0.08s; }
+.split-reveal .word:nth-child(4) .word-inner { transition-delay: 0.12s; }
+.split-reveal .word:nth-child(5) .word-inner { transition-delay: 0.16s; }
+.split-reveal .word:nth-child(6) .word-inner { transition-delay: 0.20s; }
+.split-reveal .word:nth-child(7) .word-inner { transition-delay: 0.24s; }
+.split-reveal .word:nth-child(8) .word-inner { transition-delay: 0.28s; }
+.split-reveal .word:nth-child(9) .word-inner { transition-delay: 0.32s; }
+.split-reveal .word:nth-child(10) .word-inner { transition-delay: 0.36s; }
+
+/* ========== MAGNETIC BUTTONS ========== */
+.btn-magnetic {
+  transition: transform 0.2s ease-out, box-shadow 0.4s, background 0.4s, color 0.4s, border-color 0.4s;
+}
+
+/* ========== SECTION NUMBER LABELS ========== */
+.section-number {
+  font-family: 'Playfair Display', serif; font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 900; color: rgba(42,127,191,0.04); position: absolute;
+  top: -1rem; left: -1rem; line-height: 1; pointer-events: none;
+  user-select: none;
+}
+
+/* ========== NOISE TEXTURE OVERLAY ========== */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 99998;
+  pointer-events: none; opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 256px 256px;
+}
+
+/* ========== SCROLL-TRIGGERED GLOW LINES ========== */
+.glow-line {
+  height: 1px; border: none; margin: 0;
+  background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+  opacity: 0; transition: opacity 0.8s;
+}
+.glow-line.visible { opacity: 0.3; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 480px) {
+  .stats-bar { flex-direction: column; gap: 1.2rem; padding: 1.5rem; }
+  .stat-divider { width: 40px; height: 1px; align-self: center; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 280px; }
+  .map-container { aspect-ratio: 4 / 3; }
+  .marquee-section { display: none; }
+  .hero-glasses-svg { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursor-glow"></div>
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">
+      <img src="logo.png" alt="I Spy a Good Pair of Eyes">
+      <span>I Spy a Good Pair of Eyes</span>
+    </a>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#mission">Mission</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#drives">Our Drives</a>
+      <a href="#get-involved">Get Involved</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#home">Home</a>
+    <a href="#mission">Mission</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#drives">Our Drives</a>
+    <a href="#get-involved">Get Involved</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <canvas id="hero-particles"></canvas>
+  <!-- Animated glasses line drawing -->
+  <svg class="hero-glasses-svg" viewBox="0 0 500 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40,95 C40,55 75,30 120,30 L175,30 C210,30 235,50 240,80 L245,90 C248,85 252,85 255,90 L260,80 C265,50 290,30 325,30 L380,30 C425,30 460,55 460,95 C460,135 425,160 380,155 C340,150 310,130 305,95 L300,85 C295,82 290,82 285,85 L280,95 C275,130 245,150 205,155 C165,160 130,140 120,105 L115,95 C110,135 75,160 40,95 Z" stroke="#1A2B3C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M30,75 L40,85" stroke="#1A2B3C" stroke-width="4" stroke-linecap="round"/>
+    <path d="M470,75 L460,85" stroke="#1A2B3C" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+  <div class="hero-content">
+    <h1>Giving the Gift of <em>Clear Vision</em></h1>
+    <p>We collect eyeglasses from our community and bring them to people around the world who need them most.</p>
+    <div class="hero-buttons">
+      <a href="#get-involved" class="btn btn-primary">Donate Glasses</a>
+      <a href="#mission" class="btn btn-secondary">Learn More</a>
+    </div>
+  </div>
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number" data-target="2000" data-suffix="+">0</div>
+      <div class="stat-label">Pairs Collected</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="3">0</div>
+      <div class="stat-label">Countries Reached</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="2000" data-suffix="+">0</div>
+      <div class="stat-label">Lives Impacted</div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee Ticker -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>👓</span> 2,000+ Glasses Collected</div>
+    <div class="marquee-item"><span>🌍</span> 3 Countries Reached</div>
+    <div class="marquee-item"><span>❤️</span> 2,000+ Lives Impacted</div>
+    <div class="marquee-item"><span>🏫</span> Youth-Led & Community-Based</div>
+    <div class="marquee-item"><span>📍</span> Based in Lamorinda, CA</div>
+    <div class="marquee-item"><span>✈️</span> Zimbabwe Coming Summer 2026</div>
+    <div class="marquee-item"><span>🇮🇳</span> Tiruchengode, India — July 2022</div>
+    <div class="marquee-item"><span>🇲🇽</span> Merida, Mexico — July 2025</div>
+    <div class="marquee-item"><span>👓</span> 2,000+ Glasses Collected</div>
+    <div class="marquee-item"><span>🌍</span> 3 Countries Reached</div>
+    <div class="marquee-item"><span>❤️</span> 2,000+ Lives Impacted</div>
+    <div class="marquee-item"><span>🏫</span> Youth-Led & Community-Based</div>
+    <div class="marquee-item"><span>📍</span> Based in Lamorinda, CA</div>
+    <div class="marquee-item"><span>✈️</span> Zimbabwe Coming Summer 2026</div>
+    <div class="marquee-item"><span>🇮🇳</span> Tiruchengode, India — July 2022</div>
+    <div class="marquee-item"><span>🇲🇽</span> Merida, Mexico — July 2025</div>
+  </div>
+</div>
+
+<!-- Mission Section -->
+<section class="section" id="mission">
+  <div class="section-inner">
+    <div class="mission-grid">
+      <div class="mission-text reveal">
+        <div class="section-label">Our Mission</div>
+        <h2 class="split-reveal">Clear Vision Changes Lives</h2>
+        <p>I Spy a Good Pair of Eyes is a youth-led nonprofit rooted in the Lamorinda community — Lafayette, Moraga, and Orinda — in the San Francisco Bay Area. We believe that clear vision is not a luxury. It's a fundamental need that shapes how people learn, work, and experience the world.</p>
+        <p>Every day, millions of people around the globe go without glasses they desperately need. Meanwhile, millions of usable pairs sit forgotten in drawers across our neighborhoods. We bridge that gap — collecting gently used eyeglasses from our local community and delivering them directly to people in underserved communities through hands-on international vision drives.</p>
+        <div class="pull-quote">
+          "A pair of glasses you no longer need could change someone's world."
+        </div>
+      </div>
+      <div class="mission-visual reveal reveal-delay-2">
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="mission-illustration">
+          <!-- Globe -->
+          <circle cx="200" cy="200" r="150" fill="#f0f7fc" stroke="#2A7FBF" stroke-width="1.5" opacity="0.5"/>
+          <ellipse cx="200" cy="200" rx="150" ry="50" stroke="#2A7FBF" stroke-width="0.8" fill="none" opacity="0.2"/>
+          <ellipse cx="200" cy="200" rx="50" ry="150" stroke="#2A7FBF" stroke-width="0.8" fill="none" opacity="0.2"/>
+          <ellipse cx="200" cy="200" rx="100" ry="150" stroke="#2A7FBF" stroke-width="0.6" fill="none" opacity="0.15"/>
+          <!-- Continent shapes on globe -->
+          <path d="M130,130 Q160,110 190,120 Q200,130 195,145 Q180,155 170,165 Q155,160 140,150 Z" fill="#2A7FBF" opacity="0.15"/>
+          <path d="M210,135 Q240,120 270,130 Q280,150 270,170 Q250,180 230,175 Q215,160 210,145 Z" fill="#2A7FBF" opacity="0.15"/>
+          <path d="M230,195 Q250,185 265,200 Q270,225 260,250 Q245,260 230,250 Q225,230 228,210 Z" fill="#2A7FBF" opacity="0.15"/>
+          <path d="M160,175 Q175,170 180,185 Q178,210 170,230 Q158,235 150,220 Q152,195 158,180 Z" fill="#2A7FBF" opacity="0.15"/>
+          <!-- People silhouettes around globe -->
+          <g opacity="0.7">
+            <circle cx="100" cy="280" r="14" fill="#2A7FBF"/><rect x="90" y="298" width="20" height="35" rx="10" fill="#2A7FBF"/>
+            <circle cx="200" cy="260" r="18" fill="#3DBF8C"/><rect x="186" y="282" width="28" height="42" rx="14" fill="#3DBF8C"/>
+            <circle cx="300" cy="280" r="14" fill="#F5A623"/><rect x="290" y="298" width="20" height="35" rx="10" fill="#F5A623"/>
+          </g>
+          <!-- Glasses icon -->
+          <g transform="translate(155,85)">
+            <rect x="0" y="0" width="38" height="26" rx="13" stroke="#1A2B3C" stroke-width="3" fill="none"/>
+            <rect x="50" y="0" width="38" height="26" rx="13" stroke="#1A2B3C" stroke-width="3" fill="none"/>
+            <path d="M38,10 Q44,4 50,10" stroke="#1A2B3C" stroke-width="3" fill="none"/>
+          </g>
+          <!-- Heart -->
+          <path d="M195,72 C195,64 185,60 185,68 C185,76 195,82 195,82 C195,82 205,76 205,68 C205,60 195,64 195,72Z" fill="#F5A623" opacity="0.6"/>
+          <!-- Connection lines -->
+          <line x1="115" y1="280" x2="175" y2="240" stroke="#2A7FBF" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+          <line x1="285" y1="280" x2="225" y2="240" stroke="#F5A623" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C200,20 400,40 600,30 C800,20 1000,40 1200,15 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
+<!-- How It Works -->
+<section class="section how-bg" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-label reveal">The Process</div>
+    <h2 class="section-title split-reveal">How It Works</h2>
+    <p class="section-subtitle reveal">Three simple steps connect your unused glasses to someone who needs them most.</p>
+    <div class="steps-container">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-number">1</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <rect x="16" y="8" width="32" height="48" rx="4" stroke="#2A7FBF" stroke-width="2.5" fill="none"/>
+            <rect x="22" y="14" width="20" height="8" rx="2" fill="#e8f4fd"/>
+            <line x1="22" y1="28" x2="42" y2="28" stroke="#2A7FBF" stroke-width="1.5" opacity="0.4"/>
+            <line x1="22" y1="34" x2="42" y2="34" stroke="#2A7FBF" stroke-width="1.5" opacity="0.4"/>
+            <path d="M28 42 L32 46 L40 38" stroke="#3DBF8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Drop Off</h3>
+        <p>Donate your unused glasses at collection bins located at your local Lamorinda libraries in Lafayette, Moraga, and Orinda.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-number">2</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="22" stroke="#F5A623" stroke-width="2.5" fill="none"/>
+            <path d="M22 32 C22 22, 42 22, 42 32 C42 42, 22 42, 22 32" stroke="#F5A623" stroke-width="1.5" fill="none"/>
+            <circle cx="26" cy="30" r="4" stroke="#1A2B3C" stroke-width="1.5" fill="none"/>
+            <circle cx="38" cy="30" r="4" stroke="#1A2B3C" stroke-width="1.5" fill="none"/>
+            <line x1="30" y1="30" x2="34" y2="30" stroke="#1A2B3C" stroke-width="1.5"/>
+            <path d="M28 40 L32 44 L36 40" stroke="#3DBF8C" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <h3>We Collect &amp; Sort</h3>
+        <p>Our volunteer team gathers, cleans, and organizes every pair of glasses, readying them for distribution abroad.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-number">3</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M10 38 Q32 10 54 38" stroke="#3DBF8C" stroke-width="2.5" fill="none"/>
+            <circle cx="32" cy="38" r="18" stroke="#2A7FBF" stroke-width="2" fill="none"/>
+            <ellipse cx="32" cy="38" rx="18" ry="7" stroke="#2A7FBF" stroke-width="1.5" fill="none"/>
+            <ellipse cx="32" cy="38" rx="7" ry="18" stroke="#2A7FBF" stroke-width="1.5" fill="none"/>
+            <circle cx="40" cy="30" r="3" fill="#F5A623"/>
+            <circle cx="24" cy="42" r="2.5" fill="#F5A623"/>
+            <circle cx="38" cy="46" r="2" fill="#F5A623"/>
+          </svg>
+        </div>
+        <h3>We Deliver</h3>
+        <p>Our team travels to underserved communities around the world and distributes glasses directly to people in need through hands-on vision drives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider (flip) -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C300,15 500,45 700,25 C900,5 1100,35 1200,20 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
+<!-- Our Drives Section -->
+<section class="section drives-section" id="drives">
+  <div class="section-inner">
+    <div class="section-label reveal">Our Impact</div>
+    <h2 class="section-title split-reveal">Where We've Been &amp; Where We're Going</h2>
+    <p class="section-subtitle reveal">Every drive brings clear vision — and new hope — to communities that need it most.</p>
+
+    <!-- Interactive World Map -->
+    <div class="map-container reveal">
+      <svg id="world-map" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pathGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3DBF8C;stop-opacity:0.7"/>
+            <stop offset="100%" style="stop-color:#2A7FBF;stop-opacity:0.7"/>
+          </linearGradient>
+          <linearGradient id="pathGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#3DBF8C;stop-opacity:0.7"/>
+            <stop offset="100%" style="stop-color:#F5A623;stop-opacity:0.7"/>
+          </linearGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.15"/></filter>
+        </defs>
+
+        <!-- Lat/Lng grid -->
+        <g opacity="0.04" stroke="#2A7FBF" stroke-width="0.5" fill="none">
+          <line x1="0" y1="100" x2="1200" y2="100"/><line x1="0" y1="200" x2="1200" y2="200"/>
+          <line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="400" x2="1200" y2="400"/>
+          <line x1="0" y1="500" x2="1200" y2="500"/>
+          <line x1="200" y1="0" x2="200" y2="600"/><line x1="400" y1="0" x2="400" y2="600"/>
+          <line x1="600" y1="0" x2="600" y2="600"/><line x1="800" y1="0" x2="800" y2="600"/>
+          <line x1="1000" y1="0" x2="1000" y2="600"/>
+        </g>
+
+        <!-- ===== REALISTIC CONTINENT OUTLINES ===== -->
+        <!-- North America -->
+        <path d="M65,75 L80,68 L105,58 L130,52 L165,48 L195,50 L225,46 L255,52 L275,60 L290,55 L305,50 L315,55 L310,65 L295,72 L280,78 L270,88 L265,100 L272,108 L280,112 L282,122 L275,135 L268,142 L262,148 L258,155 L252,165 L248,175 L240,182 L235,188 L230,195 L220,205 L212,212 L200,218 L192,220 L188,228 L180,232 L172,235 L168,240 L160,248 L152,252 L148,258 L142,262 L135,258 L128,250 L118,242 L108,238 L95,232 L85,225 L78,218 L72,208 L65,195 L60,185 L55,170 L50,155 L48,140 L50,125 L52,115 L58,105 L62,92 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Greenland -->
+        <path d="M310,32 L340,28 L365,32 L378,42 L375,58 L360,68 L340,72 L320,68 L308,55 L305,42 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Central America -->
+        <path d="M148,258 L155,262 L160,268 L165,275 L172,278 L178,282 L182,288 L180,295 L175,300 L168,302 L160,298 L155,292 L148,285 L142,278 L138,270 L140,262 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Caribbean -->
+        <path d="M195,258 L210,255 L220,260 L225,268 L218,272 L205,270 L195,265 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- South America -->
+        <path d="M200,305 L215,298 L232,295 L250,298 L268,305 L278,312 L288,322 L298,335 L305,350 L310,368 L312,385 L310,402 L305,418 L298,432 L288,445 L278,455 L268,462 L258,468 L248,472 L240,478 L232,482 L225,488 L220,495 L218,502 L222,508 L228,510 L238,505 L240,498 L235,492 L240,488 L248,485 L238,492 L235,502 L232,512 L228,518 L222,522 L215,518 L212,510 L210,500 L208,488 L205,475 L200,460 L195,442 L192,425 L190,408 L188,392 L186,375 L185,358 L186,342 L188,328 L192,315 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Europe -->
+        <path d="M458,52 L472,48 L488,50 L502,48 L518,52 L535,55 L548,60 L558,65 L565,72 L570,82 L572,92 L570,102 L565,112 L558,120 L548,128 L538,132 L528,135 L518,138 L508,142 L498,145 L488,142 L478,138 L468,132 L458,125 L452,118 L448,108 L445,98 L442,88 L445,78 L448,68 L452,58 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- UK & Ireland -->
+        <path d="M428,72 L438,68 L445,72 L445,82 L440,92 L432,95 L425,90 L422,82 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- Scandinavia -->
+        <path d="M488,25 L498,22 L508,28 L515,38 L510,50 L502,48 L495,42 L488,35 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- Africa -->
+        <path d="M468,195 L485,188 L502,185 L518,188 L535,192 L548,198 L558,205 L568,215 L575,228 L580,242 L585,258 L588,275 L588,292 L586,308 L582,325 L578,340 L572,355 L565,368 L555,378 L545,388 L535,395 L522,400 L510,402 L498,400 L485,395 L475,388 L465,378 L458,368 L452,355 L448,340 L445,325 L442,308 L442,292 L445,275 L448,258 L452,242 L456,228 L460,215 L465,205 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Madagascar -->
+        <path d="M592,358 L598,352 L602,358 L602,375 L598,385 L592,382 L590,370 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- Middle East -->
+        <path d="M572,148 L590,142 L608,145 L622,152 L632,162 L638,172 L635,182 L628,188 L618,192 L608,195 L598,198 L588,195 L578,188 L572,178 L568,168 L568,158 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Russia / Northern Asia -->
+        <path d="M565,72 L590,62 L620,55 L660,48 L700,42 L740,38 L780,35 L820,32 L860,35 L900,38 L930,42 L950,48 L960,58 L958,72 L950,85 L935,95 L920,102 L900,108 L880,112 L860,115 L840,118 L820,120 L800,118 L780,115 L760,112 L740,108 L720,105 L700,102 L680,98 L660,95 L640,92 L620,88 L600,82 L580,78 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- China / East Asia -->
+        <path d="M740,108 L762,105 L785,108 L808,115 L825,125 L838,138 L845,152 L842,168 L835,178 L825,188 L812,195 L798,198 L782,200 L768,198 L755,192 L742,185 L732,175 L725,165 L720,152 L718,140 L722,128 L728,118 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Japan -->
+        <path d="M868,118 L875,112 L882,115 L888,125 L890,138 L885,148 L878,155 L870,152 L865,142 L862,132 L865,125 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- Korean Peninsula -->
+        <path d="M845,125 L852,120 L858,125 L858,138 L852,148 L845,145 L842,138 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- India -->
+        <path d="M665,165 L680,158 L698,155 L715,160 L728,168 L735,180 L738,195 L735,210 L730,225 L722,238 L712,250 L702,260 L690,268 L678,272 L668,268 L658,260 L650,248 L645,235 L642,220 L642,205 L645,192 L650,180 L658,172 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Sri Lanka -->
+        <path d="M698,278 L705,275 L710,280 L708,290 L702,295 L696,290 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.5"/>
+        <!-- Southeast Asia -->
+        <path d="M770,208 L785,202 L800,205 L812,212 L820,222 L822,235 L818,248 L810,258 L800,265 L788,268 L778,262 L770,252 L765,240 L762,228 L765,218 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- Indonesia -->
+        <path d="M785,295 L800,290 L815,292 L830,295 L848,298 L862,302 L872,308 L868,315 L855,318 L840,318 L822,315 L805,312 L790,308 L782,302 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <path d="M875,305 L890,302 L905,305 L912,312 L908,318 L895,320 L882,318 L875,312 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.6"/>
+        <!-- Philippines -->
+        <path d="M842,215 L848,210 L855,215 L855,230 L850,240 L842,238 L838,228 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.5"/>
+        <!-- Australia -->
+        <path d="M835,368 L858,358 L882,352 L908,350 L932,355 L952,362 L968,375 L975,390 L978,408 L975,425 L968,438 L958,448 L945,455 L930,458 L912,458 L895,455 L878,448 L862,438 L850,425 L842,410 L838,395 L835,380 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.8"/>
+        <!-- New Zealand -->
+        <path d="M1005,430 L1012,425 L1018,430 L1020,442 L1015,452 L1008,455 L1002,448 L1000,438 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.5"/>
+        <path d="M1015,455 L1020,452 L1025,458 L1022,468 L1018,472 L1012,468 Z" fill="#dce5ef" stroke="#c2cdd8" stroke-width="0.5"/>
+
+        <!-- ===== FLIGHT PATHS ===== -->
+        <!-- Lamorinda → India (curved over Pacific) -->
+        <path d="M170,175 Q450,60 690,235" class="flight-path" stroke="url(#pathGrad1)" stroke-width="2">
+          <animate attributeName="stroke-dashoffset" from="300" to="0" dur="4s" repeatCount="indefinite"/>
+        </path>
+        <!-- Lamorinda → Mexico -->
+        <path d="M170,175 Q165,220 172,272" class="flight-path" stroke="url(#pathGrad1)" stroke-width="2">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+        <!-- Lamorinda → Zimbabwe -->
+        <path d="M170,175 Q420,120 545,365" class="flight-path" stroke="url(#pathGrad2)" stroke-width="2.5" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="300" to="0" dur="4s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Animated dot on Zimbabwe path -->
+        <g filter="url(#glow)">
+          <circle r="4" fill="#F5A623">
+            <animateMotion dur="5s" repeatCount="indefinite" path="M170,175 Q420,120 545,365"/>
+          </circle>
+        </g>
+
+        <!-- ===== LOCATION MARKERS (clickable) ===== -->
+        <!-- Lamorinda, CA (home) -->
+        <g class="map-marker" style="cursor:default" transform="translate(170,175)">
+          <circle r="10" fill="#3DBF8C" opacity="0.15">
+            <animate attributeName="r" values="10;20;10" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="7" fill="#3DBF8C" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle r="2.5" fill="#fff"/>
+          <g class="map-label">
+            <rect x="-52" y="-32" width="104" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
+            <text y="-17" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter, sans-serif">📍 Lamorinda, CA</text>
+          </g>
+        </g>
+
+        <!-- Tiruchengode, India -->
+        <g class="map-marker map-marker-clickable" data-target="drive-india" transform="translate(690,235)" style="cursor:pointer">
+          <circle r="10" fill="#2A7FBF" opacity="0.15">
+            <animate attributeName="r" values="8;16;8" dur="2.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="marker-ring" r="12" fill="none" stroke="#2A7FBF" stroke-width="1.5" opacity="0"/>
+          <circle r="6" fill="#2A7FBF" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle r="2" fill="#fff"/>
+          <g class="map-label">
+            <rect x="-38" y="-32" width="76" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
+            <text y="-17" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter, sans-serif">🇮🇳 India 2022</text>
+          </g>
+        </g>
+
+        <!-- Merida, Mexico -->
+        <g class="map-marker map-marker-clickable" data-target="drive-mexico" transform="translate(172,272)" style="cursor:pointer">
+          <circle r="10" fill="#2A7FBF" opacity="0.15">
+            <animate attributeName="r" values="8;16;8" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+          </circle>
+          <circle class="marker-ring" r="12" fill="none" stroke="#2A7FBF" stroke-width="1.5" opacity="0"/>
+          <circle r="6" fill="#2A7FBF" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle r="2" fill="#fff"/>
+          <g class="map-label">
+            <rect x="-45" y="-32" width="90" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
+            <text y="-17" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter, sans-serif">🇲🇽 Mexico 2025</text>
+          </g>
+        </g>
+
+        <!-- Zimbabwe (upcoming — special styling) -->
+        <g class="map-marker map-marker-clickable" data-target="drive-zimbabwe" transform="translate(545,365)" style="cursor:pointer">
+          <circle r="14" fill="#F5A623" opacity="0.1">
+            <animate attributeName="r" values="14;28;14" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="10" fill="#F5A623" opacity="0.08">
+            <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+            <animate attributeName="opacity" values="0.15;0;0.15" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+          </circle>
+          <circle class="marker-ring" r="14" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0"/>
+          <circle r="7" fill="#F5A623" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle r="2.5" fill="#fff"/>
+          <g class="map-label">
+            <rect x="-56" y="-52" width="112" height="22" rx="6" fill="#e65100" opacity="0.95"/>
+            <text y="-37" text-anchor="middle" fill="#fff" font-size="9" font-weight="800" font-family="Inter, sans-serif" letter-spacing="1">✈ UPCOMING</text>
+            <rect x="-52" y="-30" width="104" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
+            <text y="-15" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter, sans-serif">🇿🇼 Zimbabwe 2026</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="drives-grid">
+      <!-- India -->
+      <div class="drive-card reveal reveal-delay-1" id="drive-india">
+        <div class="drive-hero-wrap">
+          <img src="images/india/download-2.png" alt="Distributing glasses in Tiruchengode">
+          <div class="drive-hero-overlay"></div>
+        </div>
+        <div class="drive-card-header">
+          <span class="drive-flag">🇮🇳</span>
+          <h3>Tiruchengode, India</h3>
+          <span class="drive-badge badge-completed">July 2022</span>
+        </div>
+        <div class="drive-card-body">
+          <p>We partnered with a local hospital in Tiruchengode, India, to distribute donated eyeglasses and provide free vision screenings.</p>
+        </div>
+        <div class="drive-expand" id="expand-india">
+          <p>In July 2022, I Spy a Good Pair of Eyes partnered with Kathir Eye Hospital and Rotary Club Tiruchengode Red Rock to host a free eye check-up camp. Glasses collected in California were cleaned, sorted, and matched by volunteer optometrists to individuals in need. The drive helped improve the vision — and daily lives — of dozens of local residents.</p>
+          <div class="drive-gallery">
+            <img src="images/india/download-7.png" alt="Vision screening" onclick="openLightbox(this.src)">
+            <img src="images/india/download-6.png" alt="Team with patient" onclick="openLightbox(this.src)">
+            <img src="images/india/download-5.png" alt="Glasses display" onclick="openLightbox(this.src)">
+            <img src="images/india/download-4.png" alt="Speaking at the event" onclick="openLightbox(this.src)">
+            <img src="images/india/download-3.png" alt="Community gathering" onclick="openLightbox(this.src)">
+            <img src="images/india/download.png" alt="Glasses distribution" onclick="openLightbox(this.src)">
+            <img src="images/india/download-1.png" alt="Community waiting" onclick="openLightbox(this.src)">
+            <img src="images/india/download-2.png" alt="Fitting glasses" onclick="openLightbox(this.src)">
+          </div>
+        </div>
+        <button class="drive-toggle" onclick="toggleDrive('india', event)">
+          Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Mexico -->
+      <div class="drive-card reveal reveal-delay-2" id="drive-mexico">
+        <div class="drive-hero-wrap">
+          <img src="images/mexico/download-2.png" alt="Merida Foundation glasses distribution">
+          <div class="drive-hero-overlay"></div>
+        </div>
+        <div class="drive-card-header">
+          <span class="drive-flag">🇲🇽</span>
+          <h3>Merida, Mexico</h3>
+          <span class="drive-badge badge-completed">July 2025</span>
+        </div>
+        <div class="drive-card-body">
+          <p>We partnered with the Merida Foundation to distribute donated eyeglasses and provide free vision screenings.</p>
+        </div>
+        <div class="drive-expand" id="expand-mexico">
+          <p>In July 2025, I Spy a Good Pair of Eyes partnered with the Merida Foundation to distribute donated eyeglasses and provide free vision screenings. Glasses collected in California were cleaned, sorted, and matched by volunteers to individuals in need. The drive helped improve the vision — and daily lives — of dozens of local residents.</p>
+          <div class="drive-gallery">
+            <img src="images/mexico/download-2.png" alt="Merida Foundation table" onclick="openLightbox(this.src)">
+            <img src="images/mexico/download-1.png" alt="Volunteers sorting glasses" onclick="openLightbox(this.src)">
+            <img src="images/mexico/download.png" alt="Community lining up" onclick="openLightbox(this.src)">
+          </div>
+        </div>
+        <button class="drive-toggle" onclick="toggleDrive('mexico', event)">
+          Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Zimbabwe (Upcoming) -->
+      <div class="drive-card upcoming reveal reveal-delay-3" id="drive-zimbabwe">
+        <div class="drive-card-header">
+          <span class="drive-flag">🇿🇼</span>
+          <h3>Zimbabwe</h3>
+          <span class="drive-badge badge-upcoming">Summer 2026</span>
+        </div>
+        <div class="drive-card-body">
+          <p>This summer, we're heading to Zimbabwe to bring clear vision to communities that need it most. Our biggest drive yet.</p>
+        </div>
+        <div class="drive-expand" id="expand-zimbabwe">
+          <p>Summer 2026 marks our most ambitious drive to date. We are heading to Zimbabwe, where access to eye care is severely limited in many rural areas. We're collecting as many glasses as we can and preparing to serve hundreds of people through vision screenings and direct distribution. This trip represents the next chapter in our mission — and we need your help to make it happen. Donate your glasses, volunteer, or spread the word.</p>
+        </div>
+        <button class="drive-toggle" onclick="toggleDrive('zimbabwe', event)">
+          Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C150,30 350,50 550,20 C750,0 950,40 1200,25 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
+<!-- Get Involved -->
+<section class="section involve-bg" id="get-involved">
+  <div class="section-inner">
+    <div class="section-label reveal">Take Action</div>
+    <h2 class="section-title split-reveal">Get Involved</h2>
+    <p class="section-subtitle reveal">Whether you have a pair of glasses to give, time to volunteer, or a voice to share — you can help bring clear vision to someone who needs it.</p>
+    <div class="involve-grid">
+      <div class="involve-card reveal reveal-delay-1">
+        <div class="involve-icon">
+          <svg viewBox="0 0 34 34" fill="none">
+            <rect x="3" y="12" width="12" height="10" rx="5" stroke="#2A7FBF" stroke-width="2" fill="none"/>
+            <rect x="19" y="12" width="12" height="10" rx="5" stroke="#2A7FBF" stroke-width="2" fill="none"/>
+            <line x1="15" y1="17" x2="19" y2="17" stroke="#2A7FBF" stroke-width="2"/>
+            <path d="M14 26 L17 29 L20 26" stroke="#3DBF8C" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <line x1="17" y1="22" x2="17" y2="29" stroke="#3DBF8C" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Donate Glasses</h3>
+        <p>Have a pair of glasses you no longer wear? Drop them off at any of our collection bins at the Lafayette, Moraga, or Orinda libraries. Prescription, reading, and sunglasses are all welcome.</p>
+        <a href="#contact" class="btn btn-primary">Find a Drop-Off</a>
+      </div>
+      <div class="involve-card reveal reveal-delay-2">
+        <div class="involve-icon">
+          <svg viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="10" r="5" stroke="#F5A623" stroke-width="2" fill="none"/>
+            <path d="M8 28 C8 20, 26 20, 26 28" stroke="#F5A623" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="27" cy="12" r="3.5" stroke="#F5A623" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <circle cx="7" cy="12" r="3.5" stroke="#F5A623" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>Volunteer</h3>
+        <p>Join our team! Help sort and clean glasses, assist at local events, or — if you're ready for the adventure of a lifetime — join us on an international vision drive.</p>
+        <a href="#contact" class="btn btn-primary">Join the Team</a>
+      </div>
+      <div class="involve-card reveal reveal-delay-3">
+        <div class="involve-icon">
+          <svg viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="17" r="12" stroke="#3DBF8C" stroke-width="2" fill="none"/>
+            <path d="M12 17 L17 12 L22 17 L17 22Z" stroke="#3DBF8C" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            <circle cx="26" cy="7" r="4" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M25 5 L28 5 L28 8" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <h3>Spread the Word</h3>
+        <p>Share our story and tell your friends and family. The more people know about our mission, the more glasses we can collect and the more lives we can change.</p>
+        <a href="#contact" class="btn btn-primary">Share Our Mission</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider (dark) -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C200,25 400,50 600,20 C800,0 1000,35 1200,15 L1200,60 Z" fill="#1A2B3C"/>
+  </svg>
+</div>
+
+<!-- Impact Section -->
+<section class="section impact-section" id="impact">
+  <div class="impact-grid-bg"></div>
+  <div class="section-inner">
+    <div class="section-label reveal" style="color:rgba(255,255,255,0.4);">By The Numbers</div>
+    <h2 class="section-title reveal" style="color:#fff;">Our Impact</h2>
+    <div class="impact-stats">
+      <div class="impact-stat reveal reveal-delay-1">
+        <div class="stat-number" data-target="2000" data-suffix="+">0</div>
+        <div class="stat-label">Glasses Collected</div>
+      </div>
+      <div class="impact-stat reveal reveal-delay-1">
+        <div class="stat-number" data-target="3">0</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="impact-stat reveal reveal-delay-2">
+        <div class="stat-number" data-target="2000" data-suffix="+">0</div>
+        <div class="stat-label">Lives Changed</div>
+      </div>
+      <div class="impact-stat reveal reveal-delay-2">
+        <div class="stat-number" data-target="100" data-suffix="+">0</div>
+        <div class="stat-label">Volunteers</div>
+      </div>
+    </div>
+    <div class="impact-callout reveal">
+      <p>Globally, <strong>1 billion people</strong> need glasses but cannot access or afford them. For many, a simple pair of corrective lenses is all that stands between them and the ability to learn, earn a living, and participate fully in life.</p>
+      <div class="callout-box">
+        <h4>Why Glasses?</h4>
+        <p>Uncorrected vision is one of the largest unaddressed health issues in the world. A pair of glasses costing just a few dollars can double a person's productivity, keep a child in school, and prevent accidents. Yet for billions, they remain out of reach. That's why every pair you donate matters. — Source: World Health Organization</p>
+      </div>
+    </div>
+    <div class="timeline-label reveal">Our Journey</div>
+    <div class="timeline reveal">
+      <div class="timeline-inner">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2022</div>
+          <div class="timeline-desc">Founded in Lamorinda, CA &amp; first drive in Tiruchengode, India</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2023–24</div>
+          <div class="timeline-desc">Collection bins placed at Lamorinda libraries</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2025</div>
+          <div class="timeline-desc">Eyeglass drive in Merida, Mexico</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--accent); box-shadow: 0 0 12px rgba(61,191,140,0.6);"></div>
+          <div class="timeline-year" style="color: var(--accent);">2026</div>
+          <div class="timeline-desc">Upcoming: Zimbabwe vision drive</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section contact-section" id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Reach Out</div>
+    <h2 class="section-title split-reveal">Get in Touch</h2>
+    <p class="section-subtitle reveal">Have questions, want to volunteer, or know a community that could benefit from a vision drive? We'd love to hear from you.</p>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Let's Connect</h3>
+        <p>We're a youth-led team based in Lamorinda, CA — serving communities worldwide. Whether you want to donate glasses, join our next drive, or partner with us, reach out and we'll get back to you.</p>
+
+        <a href="mailto:rmnitin12@gmail.com" class="contact-method">
+          <div class="contact-method-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4 L12 13 L22 4"/></svg>
+          </div>
+          <div class="contact-method-text">
+            <strong>Email (preferred)</strong>
+            <span>rmnitin12@gmail.com</span>
+          </div>
+        </a>
+
+        <a href="tel:+13105603081" class="contact-method">
+          <div class="contact-method-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="contact-method-text">
+            <strong>Text / Call</strong>
+            <span>(310) 560-3081</span>
+          </div>
+        </a>
+
+        <div style="margin-top: 1.5rem;">
+          <p><strong>Drop-off locations:</strong></p>
+          <p style="color: #64748b; font-size: 0.92rem;">Lafayette Library &bull; Moraga Library &bull; Orinda Library</p>
+        </div>
+      </div>
+      <form class="contact-form reveal reveal-delay-2" id="contact-form" novalidate>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+          <span class="error-msg" id="name-error">Please enter your name.</span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          <span class="error-msg" id="email-error">Please enter a valid email address.</span>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="How can we help?" required></textarea>
+          <span class="error-msg" id="message-error">Please enter a message.</span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+        <div class="form-success" id="form-success">Thank you! Your message has been sent. We'll get back to you soon.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <img id="lightbox-img" src="" alt="Full size photo">
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3 style="color:#fff; font-size:1.15rem; margin-bottom:0.3rem;">I Spy a Good Pair of Eyes</h3>
+      <p>A youth-led nonprofit collecting eyeglasses from our community and delivering them to people around the world who need them most.</p>
+      <p style="font-size:0.82rem;">Based in Lamorinda, CA &bull; Serving Communities Worldwide</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigate</h4>
+      <a href="#home">Home</a>
+      <a href="#mission">Mission</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#drives">Our Drives</a>
+      <a href="#get-involved">Get Involved</a>
+    </div>
+    <div class="footer-links">
+      <h4>Contact</h4>
+      <a href="mailto:rmnitin12@gmail.com">rmnitin12@gmail.com</a>
+      <a href="tel:+13105603081">(310) 560-3081</a>
+      <a href="#get-involved">Donate Glasses</a>
+      <a href="#get-involved">Volunteer</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 I Spy a Good Pair of Eyes. All rights reserved.</span>
+    <span>Made with care in Lamorinda, CA</span>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+// ========== CURSOR GLOW ==========
+const cursorGlow = document.getElementById('cursor-glow');
+let mouseX = -300, mouseY = -300;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+});
+function updateCursor() {
+  cursorGlow.style.left = mouseX + 'px';
+  cursorGlow.style.top = mouseY + 'px';
+  requestAnimationFrame(updateCursor);
+}
+updateCursor();
+
+// ========== HERO PARTICLES ==========
+const canvas = document.getElementById('hero-particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  const hero = document.querySelector('.hero');
+  canvas.width = hero.offsetWidth;
+  canvas.height = hero.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 3 + 1;
+    this.speedX = (Math.random() - 0.5) * 0.5;
+    this.speedY = (Math.random() - 0.5) * 0.5;
+    this.opacity = Math.random() * 0.15 + 0.03;
+    this.color = ['#2A7FBF', '#3DBF8C', '#F5A623'][Math.floor(Math.random() * 3)];
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.opacity;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = '#2A7FBF';
+        ctx.globalAlpha = 0.03 * (1 - dist / 120);
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ========== NAVBAR SCROLL ==========
+const navbar = document.getElementById('navbar');
+const backToTop = document.getElementById('back-to-top');
+const scrollProgress = document.getElementById('scroll-progress');
+
+function onScroll() {
+  const scrollY = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  scrollProgress.style.width = ((scrollY / docHeight) * 100) + '%';
+  navbar.classList.toggle('scrolled', scrollY > 50);
+  backToTop.classList.toggle('visible', scrollY > 400);
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ========== MOBILE MENU ==========
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ========== SCROLL REVEAL ==========
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ========== COUNT-UP ANIMATION ==========
+function animateCount(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2200;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    el.textContent = Math.floor(eased * target).toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.stat-number').forEach(animateCount);
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.stats-bar, .impact-stats').forEach(el => statObserver.observe(el));
+
+// ========== DRIVE CARDS EXPAND ==========
+function toggleDrive(id, event) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  const card = document.getElementById('drive-' + id);
+  const expand = document.getElementById('expand-' + id);
+  if (!card || !expand) return;
+  const isOpen = expand.classList.contains('open');
+
+  document.querySelectorAll('.drive-expand').forEach(e => e.classList.remove('open'));
+  document.querySelectorAll('.drive-card').forEach(c => c.classList.remove('expanded'));
+
+  if (!isOpen) {
+    expand.classList.add('open');
+    card.classList.add('expanded');
+  }
+}
+
+// ========== CLICKABLE MAP MARKERS ==========
+let mapClickLock = false;
+document.querySelectorAll('.map-marker-clickable').forEach(marker => {
+  marker.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (mapClickLock) return;
+    mapClickLock = true;
+
+    const targetId = marker.getAttribute('data-target');
+    const card = document.getElementById(targetId);
+    if (!card) { mapClickLock = false; return; }
+    const driveId = targetId.replace('drive-', '');
+
+    // Close all drives first
+    document.querySelectorAll('.drive-expand').forEach(el => el.classList.remove('open'));
+    document.querySelectorAll('.drive-card').forEach(c => c.classList.remove('expanded'));
+
+    // Scroll to card
+    const rect = card.getBoundingClientRect();
+    const targetY = rect.top + window.pageYOffset - 120;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+    // Wait for scroll, then expand
+    setTimeout(() => {
+      const expand = document.getElementById('expand-' + driveId);
+      if (expand && !expand.classList.contains('open')) {
+        expand.classList.add('open');
+        card.classList.add('expanded');
+      }
+      // Brief highlight
+      card.style.boxShadow = '0 0 0 4px rgba(42,127,191,0.35), 0 12px 48px rgba(26,43,60,0.18)';
+      setTimeout(() => { card.style.boxShadow = ''; mapClickLock = false; }, 2000);
+    }, 1000);
+  });
+});
+
+// ========== LIGHTBOX ==========
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox-img')) return;
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ========== CONTACT FORM ==========
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  let valid = true;
+  const fields = [
+    { el: document.getElementById('name'), err: 'name-error', check: v => v.trim().length > 0 },
+    { el: document.getElementById('email'), err: 'email-error', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { el: document.getElementById('message'), err: 'message-error', check: v => v.trim().length > 0 },
+  ];
+
+  fields.forEach(f => {
+    f.el.classList.remove('error');
+    document.getElementById(f.err).style.display = 'none';
+    if (!f.check(f.el.value)) {
+      f.el.classList.add('error');
+      document.getElementById(f.err).style.display = 'block';
+      valid = false;
+    }
+  });
+
+  if (valid) {
+    e.target.style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  }
+});
+
+// ========== ACTIVE NAV LINK ==========
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => {
+        const isActive = link.getAttribute('href') === '#' + id;
+        link.style.color = isActive ? 'var(--primary)' : '';
+        if (isActive) {
+          link.style.setProperty('--after-width', '100%');
+        }
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+sections.forEach(s => navObserver.observe(s));
+
+// ========== 3D TILT ON STEP CARDS & INVOLVE CARDS ==========
+document.querySelectorAll('.step-card, .involve-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / centerY * -6;
+    const rotateY = (x - centerX) / centerX * 6;
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ========== MAGNETIC BUTTONS ==========
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// ========== SPLIT TEXT REVEAL ==========
+document.querySelectorAll('.split-reveal').forEach(el => {
+  const text = el.textContent.trim();
+  el.innerHTML = text.split(' ').map(word =>
+    `<span class="word"><span class="word-inner">${word}</span></span>`
+  ).join(' ');
+});
+const splitObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      splitObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.split-reveal').forEach(el => splitObserver.observe(el));
+
+// ========== GLOW LINES ==========
+const glowObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      glowObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.glow-line').forEach(el => glowObserver.observe(el));
+
+// ========== SMOOTH PARALLAX (subtle) ==========
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg && scrollY < window.innerHeight) {
+    heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
