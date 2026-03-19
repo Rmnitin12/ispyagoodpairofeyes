@@ -275,6 +275,73 @@ input, textarea { font-family: 'Inter', sans-serif; }
   display: flex; justify-content: center; align-items: center;
   position: relative;
 }
+
+/* ========== FOUNDER ========== */
+.founder-section {
+  background: linear-gradient(135deg, #f0f7fc 0%, #fafafa 50%, #f0fdf7 100%);
+  position: relative; overflow: hidden;
+}
+.founder-section::before {
+  content: ''; position: absolute; top: -100px; right: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,127,191,0.06), transparent 70%);
+}
+.founder-section::after {
+  content: ''; position: absolute; bottom: -100px; left: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(61,191,140,0.06), transparent 70%);
+}
+.founder-grid {
+  display: grid; grid-template-columns: 1fr 1.5fr;
+  gap: 4rem; align-items: center; position: relative; z-index: 1;
+}
+@media (max-width: 768px) { .founder-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+.founder-photo-wrap {
+  position: relative; display: flex; justify-content: center;
+}
+.founder-photo-frame {
+  position: relative; width: 280px; height: 320px;
+  border-radius: 24px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(42,127,191,0.15);
+  border: 3px solid rgba(42,127,191,0.1);
+}
+.founder-photo-frame img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.founder-photo-accent {
+  position: absolute; top: -12px; left: -12px; right: -12px; bottom: -12px;
+  border: 2px dashed rgba(42,127,191,0.15); border-radius: 30px;
+  pointer-events: none;
+}
+.founder-text h2 {
+  font-size: clamp(2rem, 4vw, 2.6rem); margin-bottom: 0.4rem; font-weight: 800;
+}
+.founder-name {
+  font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600;
+  color: var(--primary); margin-bottom: 0.3rem;
+}
+.founder-role {
+  font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;
+}
+.founder-text p {
+  color: #4a5568; margin-bottom: 1.2rem; font-size: 1.02rem; line-height: 1.8;
+}
+.founder-story-highlight {
+  background: linear-gradient(135deg, rgba(42,127,191,0.06), rgba(61,191,140,0.06));
+  border-left: 4px solid var(--primary);
+  padding: 1.2rem 1.5rem; border-radius: 0 12px 12px 0;
+  margin: 1.5rem 0;
+}
+.founder-story-highlight p {
+  color: var(--dark); font-weight: 500; margin-bottom: 0; font-size: 1rem;
+}
+.founder-tags {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem;
+}
+.founder-tag {
+  padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 500;
+  background: rgba(42,127,191,0.08); color: var(--primary);
+}
 .mission-illustration {
   width: 80%; max-width: 380px;
   animation: float 6s ease-in-out infinite;
@@ -868,6 +935,7 @@ body::after {
     <div class="nav-links">
       <a href="#home">Home</a>
       <a href="#mission">Mission</a>
+      <a href="#founder">Founder</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#drives">Our Drives</a>
       <a href="#get-involved">Get Involved</a>
@@ -880,6 +948,7 @@ body::after {
   <div class="mobile-menu" id="mobile-menu">
     <a href="#home">Home</a>
     <a href="#mission">Mission</a>
+    <a href="#founder">Founder</a>
     <a href="#how-it-works">How It Works</a>
     <a href="#drives">Our Drives</a>
     <a href="#get-involved">Get Involved</a>
@@ -988,6 +1057,39 @@ body::after {
           <line x1="115" y1="280" x2="175" y2="240" stroke="#2A7FBF" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
           <line x1="285" y1="280" x2="225" y2="240" stroke="#F5A623" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
         </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Founder Section -->
+<section class="section founder-section" id="founder">
+  <div class="section-inner">
+    <div class="section-label reveal">Meet the Founder</div>
+    <div class="founder-grid">
+      <div class="founder-photo-wrap reveal">
+        <div class="founder-photo-frame">
+          <img src="images/founder.jpeg" alt="Nitin Ravikumar, Founder of I Spy a Good Pair of Eyes">
+          <div class="founder-photo-accent"></div>
+        </div>
+      </div>
+      <div class="founder-text reveal reveal-delay-1">
+        <h2 class="split-reveal">A Personal Mission</h2>
+        <div class="founder-name">Nitin Ravikumar</div>
+        <div class="founder-role">Founder &amp; President &bull; Est. 2022</div>
+        <p>I Spy a Good Pair of Eyes was born from something deeply personal. Growing up, I watched my grandfather struggle with glaucoma — a condition that slowly stole his vision until he was nearly blind. Seeing someone I loved lose the ability to read, recognize faces, and navigate the world around him left a lasting mark on me.</p>
+        <div class="founder-story-highlight">
+          <p>That experience opened my eyes to a harsh reality: millions of people around the world live without access to basic vision care — not because solutions don't exist, but because they're out of reach.</p>
+        </div>
+        <p>I started this nonprofit as a high school student in Lamorinda, CA with a simple idea: collect the usable eyeglasses sitting unused in our community and get them to people who need them most. What began as a local collection drive has grown into an organization that has distributed over 2,000 pairs of glasses across India, Mexico, and soon Zimbabwe.</p>
+        <p>Every pair of glasses we deliver carries the same hope — that no one should lose their connection to the world because of something as solvable as poor vision.</p>
+        <div class="founder-tags">
+          <span class="founder-tag">Nonprofit Founder</span>
+          <span class="founder-tag">Campolindo High School</span>
+          <span class="founder-tag">Eagle Scout Candidate</span>
+          <span class="founder-tag">UC Berkeley BBAY</span>
+          <span class="founder-tag">Financial Literacy Advocate</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1515,6 +1617,7 @@ body::after {
       <h4>Navigate</h4>
       <a href="#home">Home</a>
       <a href="#mission">Mission</a>
+      <a href="#founder">Founder</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#drives">Our Drives</a>
       <a href="#get-involved">Get Involved</a>
