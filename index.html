@@ -515,6 +515,73 @@ input, textarea { font-family: 'Inter', sans-serif; }
 }
 .drive-card.expanded .drive-toggle svg { transform: rotate(180deg); }
 
+/* ========== FUNDRAISER ========== */
+.fundraiser-section {
+  background: #fff; position: relative; overflow: hidden;
+}
+.fundraiser-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: center;
+}
+@media (max-width: 768px) { .fundraiser-grid { grid-template-columns: 1fr; } }
+.fundraiser-details { position: relative; z-index: 1; }
+.fundraiser-event-name {
+  font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; margin-bottom: 0.6rem;
+}
+.fundraiser-event-name em {
+  font-style: normal; color: var(--secondary);
+}
+.fundraiser-partner {
+  font-size: 1rem; color: #64748b; margin-bottom: 2rem;
+}
+.fundraiser-info-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 500px) { .fundraiser-info-cards { grid-template-columns: 1fr; } }
+.fundraiser-info-card {
+  background: var(--light-gray); border-radius: 12px; padding: 1.2rem;
+  text-align: center;
+}
+.fundraiser-info-card .info-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 0.4rem;
+}
+.fundraiser-info-card .info-value {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+  color: var(--dark);
+}
+.fundraiser-info-card .info-value span {
+  display: block; font-size: 1rem;
+}
+.fundraiser-desc {
+  color: #4a5568; font-size: 1rem; line-height: 1.8; margin-bottom: 1.5rem;
+}
+.fundraiser-highlight {
+  background: var(--light-gray);
+  border-left: 4px solid var(--accent);
+  padding: 1rem 1.2rem; border-radius: 0 12px 12px 0;
+  margin-bottom: 2rem;
+}
+.fundraiser-highlight p {
+  color: var(--dark); font-weight: 500; margin: 0; font-size: 0.95rem;
+}
+.fundraiser-flyer-wrap {
+  display: flex; justify-content: center; align-items: center;
+}
+.fundraiser-flyer-frame {
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.06);
+  max-width: 420px; width: 100%;
+}
+.fundraiser-flyer-frame img {
+  width: 100%; height: auto; display: block;
+}
+.fundraiser-links {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+
 /* ========== GET INVOLVED ========== */
 .involve-bg { background: var(--light-gray); position: relative; overflow: hidden; }
 .involve-bg::after {
@@ -921,6 +988,7 @@ body::after {
       <a href="#founder">Founder</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#drives">Our Drives</a>
+      <a href="#fundraiser">Fundraiser</a>
       <a href="#get-involved">Get Involved</a>
       <a href="#contact">Contact</a>
     </div>
@@ -1406,6 +1474,54 @@ body::after {
   </svg>
 </div>
 
+<!-- Fundraiser -->
+<section class="section fundraiser-section" id="fundraiser">
+  <div class="section-inner">
+    <div class="section-label reveal">Upcoming Event</div>
+    <h2 class="section-title split-reveal">Community Fundraiser</h2>
+    <p class="section-subtitle reveal">Join us for a night of froyo and giving back — every scoop supports clearer vision.</p>
+    <div class="fundraiser-grid">
+      <div class="fundraiser-details reveal">
+        <h3 class="fundraiser-event-name">Froyo for a <em>Cause!</em></h3>
+        <p class="fundraiser-partner">In partnership with <strong>Tangelo FroYo</strong> — Rheem Valley Shopping Center, Moraga, CA</p>
+        <div class="fundraiser-info-cards">
+          <div class="fundraiser-info-card">
+            <div class="info-label">Date</div>
+            <div class="info-value">Friday<span>March 27</span></div>
+          </div>
+          <div class="fundraiser-info-card">
+            <div class="info-label">Time</div>
+            <div class="info-value">6:00 –<span>9:00 PM</span></div>
+          </div>
+          <div class="fundraiser-info-card">
+            <div class="info-label">Donated</div>
+            <div class="info-value" style="color: var(--accent);">20%<span>of Sales</span></div>
+          </div>
+        </div>
+        <p class="fundraiser-desc">Enjoy frozen yogurt at Tangelo FroYo and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Bring your family and friends — every scoop supports our upcoming Zimbabwe vision drive this summer!</p>
+        <div class="fundraiser-highlight">
+          <p>We've collected 2,000+ pairs of glasses — and our biggest trip to Zimbabwe is this summer. Your support helps us get there.</p>
+        </div>
+        <div class="fundraiser-links">
+          <a href="#get-involved" class="btn btn-primary">Get Involved</a>
+        </div>
+      </div>
+      <div class="fundraiser-flyer-wrap reveal reveal-delay-2">
+        <div class="fundraiser-flyer-frame">
+          <img src="images/fundraiser-flyer.png" alt="Froyo for a Cause fundraiser flyer — Friday March 27, 6-9 PM at Tangelo FroYo, Moraga. 20% of sales donated to I Spy a Good Pair of Eyes.">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C200,25 400,50 600,30 C800,10 1000,45 1200,20 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
 <!-- Get Involved -->
 <section class="section involve-bg" id="get-involved">
   <div class="section-inner">
@@ -1603,6 +1719,7 @@ body::after {
       <a href="#founder">Founder</a>
       <a href="#how-it-works">How It Works</a>
       <a href="#drives">Our Drives</a>
+      <a href="#fundraiser">Fundraiser</a>
       <a href="#get-involved">Get Involved</a>
     </div>
     <div class="footer-links">
