@@ -583,76 +583,171 @@ input, textarea { font-family: 'Inter', sans-serif; }
 }
 
 /* ========== FUNDRAISER IMPACT BANNER ========== */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes floatUp {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.7); }
+  70%  { transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
 .fundraiser-impact {
   margin-top: 3rem;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f2027 100%);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  padding: 3rem 2rem 2.5rem;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, var(--primary) 0%, #1a6aaa 40%, var(--accent) 100%);
+  box-shadow: 0 20px 60px rgba(42,127,191,0.3), 0 4px 20px rgba(0,0,0,0.08);
 }
 .fundraiser-impact::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(255,107,53,0.18) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 50%, rgba(255,200,80,0.12) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse at 15% 0%,   rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(61,191,140,0.25)  0%, transparent 50%);
   pointer-events: none;
 }
-.impact-label {
-  text-align: center;
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.18em; color: rgba(255,255,255,0.45);
-  margin-bottom: 1.8rem;
+/* floating confetti dots */
+.fundraiser-impact::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.25) 2px, transparent 2px),
+    radial-gradient(circle, rgba(245,166,35,0.4) 2px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+  background-size: 80px 80px, 120px 120px, 50px 50px;
+  background-position: 10px 20px, 40px 60px, 5px 5px;
 }
-.impact-row {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0; flex-wrap: wrap;
-  position: relative; z-index: 1;
+.impact-event-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em;
+  padding: 0.3rem 0.9rem; border-radius: 999px;
+  margin-bottom: 1.6rem;
+  animation: floatUp 0.6s ease both;
+  position: relative; z-index: 2;
 }
-.impact-block {
-  text-align: center; padding: 0 2.5rem;
-  flex: 1; min-width: 130px;
-}
-.impact-block .impact-amount {
+.impact-headline {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.6rem, 6vw, 4rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 700; color: rgba(255,255,255,0.8);
+  margin-bottom: 2rem;
+  animation: floatUp 0.6s 0.1s ease both;
+  position: relative; z-index: 2;
 }
-.impact-block .impact-amount.raised { color: #fff; }
-.impact-block .impact-amount.total  {
-  background: linear-gradient(135deg, var(--accent), #ffb347);
+.impact-numbers {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap;
+  position: relative; z-index: 2;
+  margin-bottom: 2rem;
+}
+.impact-stat {
+  text-align: center;
+  animation: floatUp 0.7s ease both;
+}
+.impact-stat:nth-child(3) { animation-delay: 0.15s; }
+.impact-stat:nth-child(5) { animation-delay: 0.3s; }
+.impact-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 900; line-height: 1;
+  color: #fff;
+}
+.impact-stat-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: rgba(255,255,255,0.6);
+  margin-top: 0.35rem;
+}
+.impact-op {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900; color: rgba(255,255,255,0.35);
+  flex-shrink: 0; margin-top: -0.5rem;
+}
+/* total block */
+.impact-total-wrap {
+  text-align: center; position: relative; z-index: 2;
+  animation: popIn 0.7s 0.5s ease both;
+}
+.impact-total-ring {
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(6px);
+}
+.impact-total-ring::before {
+  content: '';
+  position: absolute; inset: -8px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+.impact-total-ring::after {
+  content: '';
+  position: absolute; inset: -16px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.08);
+  animation: pulse-ring 2.2s 0.7s ease-out infinite;
+}
+.impact-total-inner { text-align: center; }
+.impact-total-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 4.2rem);
+  font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, #fff 30%, var(--secondary) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
 }
-.impact-block .impact-sub {
-  font-size: 0.78rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-top: 0.4rem;
+.impact-total-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.14em; color: rgba(255,255,255,0.65);
+  margin-top: 0.3rem;
 }
-.impact-divider {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 0.4rem; padding: 0 0.5rem; flex-shrink: 0;
+.impact-total-sub {
+  font-size: 0.62rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
+  margin-top: 0.15rem;
 }
-.impact-arrow {
-  font-size: 1.4rem; color: rgba(255,255,255,0.2);
+/* layout: left stats + right circle */
+.impact-layout {
+  display: flex; align-items: center; justify-content: center;
+  gap: 3rem; flex-wrap: wrap;
+  position: relative; z-index: 2;
 }
-.impact-badge {
-  background: linear-gradient(135deg, var(--accent), #e55a2b);
-  color: #fff;
-  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.3rem 0.7rem; border-radius: 999px;
-  white-space: nowrap;
+.impact-left { flex: 1; min-width: 220px; }
+.impact-match-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff; font-size: 0.75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.45rem 1rem; border-radius: 999px;
+  margin-top: 1.4rem;
 }
-.impact-matched-note {
-  text-align: center; margin-top: 1.6rem;
-  font-size: 0.88rem; color: rgba(255,255,255,0.5);
-  position: relative; z-index: 1;
+.impact-match-badge::before { content: '✦'; font-size: 0.6rem; opacity: 0.7; }
+.impact-match-note {
+  font-size: 0.82rem; color: rgba(255,255,255,0.6);
+  margin-top: 0.8rem; line-height: 1.6;
 }
-.impact-matched-note strong { color: rgba(255,255,255,0.85); }
-@media (max-width: 480px) {
-  .impact-block { padding: 0 1.2rem; }
+.impact-match-note strong { color: rgba(255,255,255,0.9); }
+@media (max-width: 560px) {
+  .impact-layout { gap: 2rem; }
+  .impact-total-ring { width: 150px; height: 150px; }
 }
 
 /* ========== FUNDRAISER CAROUSEL ========== */
@@ -1633,31 +1728,34 @@ body::after {
     </div>
 
     <!-- Impact Banner -->
-    <div class="fundraiser-impact reveal">
-      <div class="impact-label">Fundraiser Results — March 27, 2026</div>
-      <div class="impact-row">
-        <div class="impact-block">
-          <div class="impact-amount raised" id="impactRaised">$0</div>
-          <div class="impact-sub">Raised at Event</div>
+    <div class="fundraiser-impact reveal" style="text-align:center;">
+      <div class="impact-event-tag">Fundraiser Results &mdash; March 27, 2026</div>
+      <div class="impact-layout">
+        <div class="impact-left">
+          <div class="impact-numbers">
+            <div class="impact-stat">
+              <div class="impact-stat-num" id="impactRaised">$0</div>
+              <div class="impact-stat-label">Raised at Event</div>
+            </div>
+            <div class="impact-op">+</div>
+            <div class="impact-stat">
+              <div class="impact-stat-num" id="impactMatched">$0</div>
+              <div class="impact-stat-label">Private Match</div>
+            </div>
+          </div>
+          <div class="impact-match-badge">Matched 1&hairsp;:&hairsp;1 by a private donor</div>
+          <p class="impact-match-note">Every dollar raised was <strong>matched in full</strong> — doubling our impact for the Zimbabwe vision drive.</p>
         </div>
-        <div class="impact-divider">
-          <span class="impact-arrow">+</span>
-          <span class="impact-badge">Matched 1:1</span>
-          <span class="impact-arrow">+</span>
-        </div>
-        <div class="impact-block">
-          <div class="impact-amount raised" id="impactMatched">$0</div>
-          <div class="impact-sub">Private Match</div>
-        </div>
-        <div class="impact-divider">
-          <span class="impact-arrow">=</span>
-        </div>
-        <div class="impact-block">
-          <div class="impact-amount total" id="impactTotal">$0</div>
-          <div class="impact-sub">Total Raised</div>
+        <div class="impact-total-wrap">
+          <div class="impact-total-ring">
+            <div class="impact-total-inner">
+              <div class="impact-total-num" id="impactTotal">$0</div>
+              <div class="impact-total-label">Total Raised</div>
+              <div class="impact-total-sub">doubled by match</div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="impact-matched-note">Every dollar raised was <strong>matched by a generous private donor</strong> — doubling our impact for the Zimbabwe vision drive.</p>
     </div>
 
     <!-- Event Photo Carousel -->
