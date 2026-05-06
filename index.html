@@ -582,6 +582,52 @@ input, textarea { font-family: 'Inter', sans-serif; }
   display: flex; gap: 1rem; flex-wrap: wrap;
 }
 
+/* ========== FUNDRAISER CAROUSEL ========== */
+.fundraiser-carousel-wrap {
+  margin-top: 3.5rem;
+}
+.fundraiser-carousel-label {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: #94a3b8; margin-bottom: 1rem;
+}
+.carousel {
+  position: relative; overflow: hidden; border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  background: #000;
+}
+.carousel-track {
+  display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.carousel-slide {
+  min-width: 100%; position: relative;
+}
+.carousel-slide img {
+  width: 100%; height: 420px; object-fit: cover; display: block;
+}
+@media (max-width: 768px) { .carousel-slide img { height: 260px; } }
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
+  width: 40px; height: 40px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--dark);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: background 0.2s, transform 0.2s;
+  z-index: 2;
+}
+.carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+.carousel-prev { left: 12px; }
+.carousel-next { right: 12px; }
+.carousel-dots {
+  display: flex; justify-content: center; gap: 6px; padding: 12px 0 4px;
+}
+.carousel-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #cbd5e1; border: none; cursor: pointer; padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.carousel-dot.active { background: var(--accent); transform: scale(1.25); }
+
 /* ========== GET INVOLVED ========== */
 .involve-bg { background: var(--light-gray); position: relative; overflow: hidden; }
 .involve-bg::after {
@@ -1120,7 +1166,7 @@ body::after {
     <div class="founder-grid">
       <div class="founder-photo-wrap reveal">
         <div class="founder-photo-frame">
-          <img src="images/founder.jpeg" alt="Nitin Ravikumar, Founder of I Spy a Good Pair of Eyes">
+          <img src="images/founder.png" alt="Nitin Ravikumar, Founder of I Spy a Good Pair of Eyes">
           <div class="founder-photo-accent"></div>
         </div>
       </div>
@@ -1510,6 +1556,35 @@ body::after {
         <div class="fundraiser-flyer-frame">
           <img src="images/fundraiser-flyer.png" alt="Froyo for a Cause fundraiser flyer — Friday March 27, 6-9 PM at Tangelo FroYo, Moraga. 20% of sales donated to I Spy a Good Pair of Eyes.">
         </div>
+      </div>
+    </div>
+
+    <!-- Event Photo Carousel -->
+    <div class="fundraiser-carousel-wrap reveal">
+      <div class="fundraiser-carousel-label">Photos from the Event</div>
+      <div class="carousel" id="fundraiserCarousel">
+        <div class="carousel-track" id="fundraiserTrack">
+          <div class="carousel-slide">
+            <img src="images/fundraiser-1.jpg" alt="Tangelo FroYo fundraiser event photo 1">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/fundraiser-2.jpg" alt="Tangelo FroYo fundraiser event photo 2">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/fundraiser-3.jpg" alt="Tangelo FroYo fundraiser event photo 3">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/fundraiser-4.jpg" alt="Tangelo FroYo fundraiser event photo 4">
+          </div>
+        </div>
+        <button class="carousel-btn carousel-prev" aria-label="Previous photo">&#8592;</button>
+        <button class="carousel-btn carousel-next" aria-label="Next photo">&#8594;</button>
+      </div>
+      <div class="carousel-dots" id="fundraiserDots">
+        <button class="carousel-dot active" aria-label="Photo 1"></button>
+        <button class="carousel-dot" aria-label="Photo 2"></button>
+        <button class="carousel-dot" aria-label="Photo 3"></button>
+        <button class="carousel-dot" aria-label="Photo 4"></button>
       </div>
     </div>
   </div>
@@ -2076,6 +2151,35 @@ window.addEventListener('scroll', () => {
     heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
   }
 }, { passive: true });
+
+// Fundraiser Carousel
+(function() {
+  const track = document.getElementById('fundraiserTrack');
+  const dots = document.querySelectorAll('#fundraiserDots .carousel-dot');
+  const total = dots.length;
+  let current = 0;
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  document.querySelector('.carousel-prev').addEventListener('click', () => goTo(current - 1));
+  document.querySelector('.carousel-next').addEventListener('click', () => goTo(current + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  // Auto-advance every 4s
+  setInterval(() => goTo(current + 1), 4000);
+
+  // Touch swipe support
+  let startX = 0;
+  track.parentElement.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.parentElement.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
