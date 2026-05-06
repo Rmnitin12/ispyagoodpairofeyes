@@ -582,6 +582,79 @@ input, textarea { font-family: 'Inter', sans-serif; }
   display: flex; gap: 1rem; flex-wrap: wrap;
 }
 
+/* ========== FUNDRAISER IMPACT BANNER ========== */
+.fundraiser-impact {
+  margin-top: 3rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f2027 100%);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.fundraiser-impact::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(255,107,53,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(255,200,80,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.impact-label {
+  text-align: center;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.18em; color: rgba(255,255,255,0.45);
+  margin-bottom: 1.8rem;
+}
+.impact-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.impact-block {
+  text-align: center; padding: 0 2.5rem;
+  flex: 1; min-width: 130px;
+}
+.impact-block .impact-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.impact-block .impact-amount.raised { color: #fff; }
+.impact-block .impact-amount.total  {
+  background: linear-gradient(135deg, var(--accent), #ffb347);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.impact-block .impact-sub {
+  font-size: 0.78rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.45); margin-top: 0.4rem;
+}
+.impact-divider {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.4rem; padding: 0 0.5rem; flex-shrink: 0;
+}
+.impact-arrow {
+  font-size: 1.4rem; color: rgba(255,255,255,0.2);
+}
+.impact-badge {
+  background: linear-gradient(135deg, var(--accent), #e55a2b);
+  color: #fff;
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.7rem; border-radius: 999px;
+  white-space: nowrap;
+}
+.impact-matched-note {
+  text-align: center; margin-top: 1.6rem;
+  font-size: 0.88rem; color: rgba(255,255,255,0.5);
+  position: relative; z-index: 1;
+}
+.impact-matched-note strong { color: rgba(255,255,255,0.85); }
+@media (max-width: 480px) {
+  .impact-block { padding: 0 1.2rem; }
+}
+
 /* ========== FUNDRAISER CAROUSEL ========== */
 .fundraiser-carousel-wrap {
   margin-top: 3.5rem;
@@ -1523,9 +1596,9 @@ body::after {
 <!-- Fundraiser -->
 <section class="section fundraiser-section" id="fundraiser">
   <div class="section-inner">
-    <div class="section-label reveal">Upcoming Event</div>
+    <div class="section-label reveal">Community Event</div>
     <h2 class="section-title split-reveal">Community Fundraiser</h2>
-    <p class="section-subtitle reveal">Join us for a night of froyo and giving back — every scoop supports clearer vision.</p>
+    <p class="section-subtitle reveal">A night of froyo and giving back — every scoop supported clearer vision.</p>
     <div class="fundraiser-grid">
       <div class="fundraiser-details reveal">
         <h3 class="fundraiser-event-name">Froyo for a <em>Cause!</em></h3>
@@ -1557,6 +1630,34 @@ body::after {
           <img src="images/fundraiser-flyer.png" alt="Froyo for a Cause fundraiser flyer — Friday March 27, 6-9 PM at Tangelo FroYo, Moraga. 20% of sales donated to I Spy a Good Pair of Eyes.">
         </div>
       </div>
+    </div>
+
+    <!-- Impact Banner -->
+    <div class="fundraiser-impact reveal">
+      <div class="impact-label">Fundraiser Results — March 27, 2026</div>
+      <div class="impact-row">
+        <div class="impact-block">
+          <div class="impact-amount raised" id="impactRaised">$0</div>
+          <div class="impact-sub">Raised at Event</div>
+        </div>
+        <div class="impact-divider">
+          <span class="impact-arrow">+</span>
+          <span class="impact-badge">Matched 1:1</span>
+          <span class="impact-arrow">+</span>
+        </div>
+        <div class="impact-block">
+          <div class="impact-amount raised" id="impactMatched">$0</div>
+          <div class="impact-sub">Private Match</div>
+        </div>
+        <div class="impact-divider">
+          <span class="impact-arrow">=</span>
+        </div>
+        <div class="impact-block">
+          <div class="impact-amount total" id="impactTotal">$0</div>
+          <div class="impact-sub">Total Raised</div>
+        </div>
+      </div>
+      <p class="impact-matched-note">Every dollar raised was <strong>matched by a generous private donor</strong> — doubling our impact for the Zimbabwe vision drive.</p>
     </div>
 
     <!-- Event Photo Carousel -->
@@ -2147,6 +2248,34 @@ window.addEventListener('scroll', () => {
     heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
   }
 }, { passive: true });
+
+// Impact counter animation
+(function() {
+  function animateCount(el, target, duration) {
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = '$' + Math.round(ease * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const banner = document.querySelector('.fundraiser-impact');
+  if (!banner) return;
+  let triggered = false;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !triggered) {
+      triggered = true;
+      setTimeout(() => animateCount(document.getElementById('impactRaised'),  180, 1200), 0);
+      setTimeout(() => animateCount(document.getElementById('impactMatched'), 180, 1200), 300);
+      setTimeout(() => animateCount(document.getElementById('impactTotal'),   360, 1400), 600);
+    }
+  }, { threshold: 0.4 });
+  obs.observe(banner);
+})();
 
 // Fundraiser Carousel
 (function() {
