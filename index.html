@@ -582,6 +582,85 @@ input, textarea { font-family: 'Inter', sans-serif; }
   display: flex; gap: 1rem; flex-wrap: wrap;
 }
 
+/* ========== SECOND FUNDRAISER SEPARATOR ========== */
+.fundraiser-next-sep {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 3.5rem 0 2.5rem;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--secondary);
+}
+.fundraiser-next-sep::before,
+.fundraiser-next-sep::after {
+  content: ''; flex: 1; height: 1px; background: #e2e8f0;
+}
+
+/* ========== LOARDS FLYER CARD ========== */
+.loards-flyer-card {
+  background: #fefcf9; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.06); width: 100%; max-width: 420px;
+}
+.lfc-bar {
+  height: 7px;
+  background: linear-gradient(90deg, #1a2e4a 0%, #4a9fd4 50%, #f4a7c0 100%);
+}
+.lfc-bar-flip {
+  background: linear-gradient(90deg, #f4a7c0 0%, #4a9fd4 50%, #1a2e4a 100%);
+}
+.lfc-body { padding: 2rem 1.75rem 1.5rem; }
+.lfc-event-tag {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #4a9fd4;
+  text-align: center; margin-bottom: 0.75rem;
+}
+.lfc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5vw, 2.4rem); font-weight: 900;
+  color: #1a2e4a; text-align: center; line-height: 1.1; margin-bottom: 0.35rem;
+}
+.lfc-title em { font-style: italic; color: #f4a7c0; }
+.lfc-sub {
+  text-align: center; font-size: 0.8rem; color: #aaa;
+  font-weight: 300; margin-bottom: 1.5rem;
+}
+.lfc-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem; margin-bottom: 1.25rem;
+}
+.lfc-card { padding: 0.9rem 0.5rem; border-radius: 4px; text-align: center; }
+.lfc-card-dark { background: #1a2e4a; }
+.lfc-card-pink  { background: #f4a7c0; }
+.lfc-card-blue  { background: #4a9fd4; }
+.lfc-card-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 0.35rem;
+}
+.lfc-card-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.2;
+}
+.lfc-card-val span { display: block; font-size: 0.85rem; }
+.lfc-location {
+  background: #f7f3ee; border: 1px solid #e8e2da; border-radius: 4px;
+  padding: 0.8rem 1rem; display: flex; align-items: center;
+  gap: 0.75rem; margin-bottom: 1.25rem;
+}
+.lfc-loc-icon { font-size: 1.1rem; flex-shrink: 0; }
+.lfc-loc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem; font-weight: 700; color: #1a2e4a;
+}
+.lfc-loc-addr { font-size: 0.72rem; color: #888; font-weight: 300; }
+.lfc-badge {
+  margin-left: auto; background: #4a9fd4; color: #fff;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
+  padding: 0.3rem 0.7rem; border-radius: 2px; flex-shrink: 0;
+}
+.lfc-tagline {
+  text-align: center; font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 0.8rem; color: #bbb; margin: 0;
+}
+
 /* ========== FUNDRAISER IMPACT BANNER ========== */
 @keyframes shimmer {
   0%   { background-position: -200% center; }
@@ -1693,7 +1772,7 @@ body::after {
   <div class="section-inner">
     <div class="section-label reveal">Community Event</div>
     <h2 class="section-title split-reveal">Community Fundraiser</h2>
-    <p class="section-subtitle reveal">A night of froyo and giving back — every scoop supported clearer vision.</p>
+    <p class="section-subtitle reveal">Local events where every purchase supports clearer vision for underserved communities.</p>
     <div class="fundraiser-grid">
       <div class="fundraiser-details reveal">
         <h3 class="fundraiser-event-name">Froyo for a <em>Cause!</em></h3>
@@ -1782,6 +1861,71 @@ body::after {
         <button class="carousel-dot" aria-label="Photo 3"></button>
       </div>
     </div>
+
+    <!-- Second Fundraiser: Loards Ice Cream -->
+    <div class="fundraiser-next-sep reveal">Upcoming Event</div>
+    <div class="fundraiser-grid">
+      <div class="fundraiser-details reveal">
+        <h3 class="fundraiser-event-name">Scoops for a <em>Cause!</em></h3>
+        <p class="fundraiser-partner">In partnership with <strong>Loards Ice Cream</strong> — 1480H Moraga Rd, Moraga, CA</p>
+        <div class="fundraiser-info-cards">
+          <div class="fundraiser-info-card">
+            <div class="info-label">Date</div>
+            <div class="info-value">Friday<span>May 29</span></div>
+          </div>
+          <div class="fundraiser-info-card">
+            <div class="info-label">Time</div>
+            <div class="info-value">1:00 –<span>5:00 PM</span></div>
+          </div>
+          <div class="fundraiser-info-card">
+            <div class="info-label">Donated</div>
+            <div class="info-value" style="color: var(--accent);">20%<span>of Sales</span></div>
+          </div>
+        </div>
+        <p class="fundraiser-desc">Grab a scoop at Loards Ice Cream and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Bring your family and friends — every cone counts toward our Zimbabwe vision drive!</p>
+        <div class="fundraiser-highlight">
+          <p>This Friday, May 29, 1–5 PM — come out, enjoy some ice cream, and help us bring clearer vision to those who need it most.</p>
+        </div>
+        <div class="fundraiser-links">
+          <a href="#get-involved" class="btn btn-primary">Get Involved</a>
+        </div>
+      </div>
+      <div class="fundraiser-flyer-wrap reveal reveal-delay-2">
+        <div class="loards-flyer-card">
+          <div class="lfc-bar"></div>
+          <div class="lfc-body">
+            <div class="lfc-event-tag">Fundraiser Event &mdash; Moraga, CA</div>
+            <h3 class="lfc-title">Scoops for a <em>Cause!</em></h3>
+            <p class="lfc-sub">I Spy a Good Pair of Eyes &times; Loards Ice Cream</p>
+            <div class="lfc-cards">
+              <div class="lfc-card lfc-card-dark">
+                <div class="lfc-card-label">Date</div>
+                <div class="lfc-card-val">Friday<span>May 29</span></div>
+              </div>
+              <div class="lfc-card lfc-card-pink">
+                <div class="lfc-card-label">Time</div>
+                <div class="lfc-card-val">1:00–<span>5:00 PM</span></div>
+              </div>
+              <div class="lfc-card lfc-card-blue">
+                <div class="lfc-card-label">Donated</div>
+                <div class="lfc-card-val">20%<span>of Sales</span></div>
+              </div>
+            </div>
+            <div class="lfc-location">
+              <div class="lfc-loc-icon">&#128205;</div>
+              <div>
+                <div class="lfc-loc-name">Loards Ice Cream</div>
+                <div class="lfc-loc-addr">1480H Moraga Rd, Moraga, CA 94556</div>
+              </div>
+              <span class="lfc-badge">Moraga</span>
+            </div>
+            <p class="lfc-tagline">Every scoop supports clearer vision.</p>
+          </div>
+          <div class="lfc-bar lfc-bar-flip"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
