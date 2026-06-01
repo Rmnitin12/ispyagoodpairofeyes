@@ -829,6 +829,31 @@ input, textarea { font-family: 'Inter', sans-serif; }
   .impact-total-ring { width: 150px; height: 150px; }
 }
 
+/* ========== LOARDS IMPACT BANNER – PINK OVERRIDE ========== */
+.fundraiser-impact-loards {
+  background: linear-gradient(135deg, #8B1A4A 0%, #c05080 40%, #f4a7c0 100%);
+  box-shadow: 0 20px 60px rgba(192,80,128,0.35), 0 4px 20px rgba(0,0,0,0.08);
+}
+.fundraiser-impact-loards::before {
+  background:
+    radial-gradient(ellipse at 15% 0%,   rgba(255,255,255,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(244,167,192,0.35) 0%, transparent 50%);
+}
+.fundraiser-impact-loards::after {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.25) 2px, transparent 2px),
+    radial-gradient(circle, rgba(244,167,192,0.55) 2px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+  background-size: 80px 80px, 120px 120px, 50px 50px;
+  background-position: 10px 20px, 40px 60px, 5px 5px;
+}
+.loards-total-num {
+  background: linear-gradient(135deg, #fff 30%, #f4a7c0 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
 /* ========== FUNDRAISER CAROUSEL ========== */
 .fundraiser-carousel-wrap {
   margin-top: 3.5rem;
@@ -1863,7 +1888,7 @@ body::after {
     </div>
 
     <!-- Second Fundraiser: Loards Ice Cream -->
-    <div class="fundraiser-next-sep reveal">Upcoming Event</div>
+    <div class="fundraiser-next-sep reveal">Past Event</div>
     <div class="fundraiser-grid">
       <div class="fundraiser-details reveal">
         <h3 class="fundraiser-event-name"><span style="color:#f4a7c0;">Scoops</span> for a <span style="color:#f4a7c0;">Cause!</span></h3>
@@ -1879,7 +1904,7 @@ body::after {
           </div>
           <div class="fundraiser-info-card">
             <div class="info-label">Donated</div>
-            <div class="info-value" style="color: var(--accent);">20%<span>of Sales</span></div>
+            <div class="info-value" style="color:#f4a7c0;">20%<span>of Sales</span></div>
           </div>
         </div>
         <p class="fundraiser-desc">Grab a scoop at Loards Ice Cream and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Bring your family and friends — every cone counts toward our Zimbabwe vision drive!</p>
@@ -1893,6 +1918,37 @@ body::after {
       <div class="fundraiser-flyer-wrap reveal reveal-delay-2">
         <div class="fundraiser-flyer-frame">
           <img src="images/loards-flyer.png" alt="Scoops for a Cause fundraiser flyer — Friday May 29, 1-5 PM at Loards Ice Cream, Moraga. 20% of sales donated to I Spy a Good Pair of Eyes.">
+        </div>
+      </div>
+    </div>
+
+    <!-- Loards Impact Banner -->
+    <div class="fundraiser-impact fundraiser-impact-loards reveal" style="text-align:center;">
+      <div class="impact-event-tag">Fundraiser Results &mdash; May 29, 2026</div>
+      <div class="impact-layout">
+        <div class="impact-left">
+          <div class="impact-numbers">
+            <div class="impact-stat">
+              <div class="impact-stat-num" id="loardsRaised">$0</div>
+              <div class="impact-stat-label">Raised at Event</div>
+            </div>
+            <div class="impact-op">+</div>
+            <div class="impact-stat">
+              <div class="impact-stat-num" id="loardsMatched">$0</div>
+              <div class="impact-stat-label">Private Match</div>
+            </div>
+          </div>
+          <div class="impact-match-badge">Matched 1&hairsp;:&hairsp;1 by a private donor</div>
+          <p class="impact-match-note">Every dollar raised was <strong>matched in full</strong> — doubling our impact for the Zimbabwe vision drive.</p>
+        </div>
+        <div class="impact-total-wrap">
+          <div class="impact-total-ring">
+            <div class="impact-total-inner">
+              <div class="impact-total-num loards-total-num" id="loardsTotal">$0</div>
+              <div class="impact-total-label">Total Raised</div>
+              <div class="impact-total-sub">doubled by match</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2476,18 +2532,33 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(step);
   }
 
-  const banner = document.querySelector('.fundraiser-impact');
-  if (!banner) return;
-  let triggered = false;
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !triggered) {
-      triggered = true;
-      setTimeout(() => animateCount(document.getElementById('impactRaised'),  180, 1200), 0);
-      setTimeout(() => animateCount(document.getElementById('impactMatched'), 180, 1200), 300);
-      setTimeout(() => animateCount(document.getElementById('impactTotal'),   360, 1400), 600);
-    }
-  }, { threshold: 0.4 });
-  obs.observe(banner);
+  const banner = document.querySelector('.fundraiser-impact:not(.fundraiser-impact-loards)');
+  if (banner) {
+    let triggered = false;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !triggered) {
+        triggered = true;
+        setTimeout(() => animateCount(document.getElementById('impactRaised'),  180, 1200), 0);
+        setTimeout(() => animateCount(document.getElementById('impactMatched'), 180, 1200), 300);
+        setTimeout(() => animateCount(document.getElementById('impactTotal'),   360, 1400), 600);
+      }
+    }, { threshold: 0.4 });
+    obs.observe(banner);
+  }
+
+  const loardsBanner = document.querySelector('.fundraiser-impact-loards');
+  if (loardsBanner) {
+    let triggered2 = false;
+    const obs2 = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !triggered2) {
+        triggered2 = true;
+        setTimeout(() => animateCount(document.getElementById('loardsRaised'),  160, 1200), 0);
+        setTimeout(() => animateCount(document.getElementById('loardsMatched'), 160, 1200), 300);
+        setTimeout(() => animateCount(document.getElementById('loardsTotal'),   320, 1400), 600);
+      }
+    }, { threshold: 0.4 });
+    obs2.observe(loardsBanner);
+  }
 })();
 
 // Fundraiser Carousel
