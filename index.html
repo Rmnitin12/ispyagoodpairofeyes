@@ -164,6 +164,23 @@ input, textarea { font-family: 'Inter', sans-serif; }
   backdrop-filter: blur(10px);
 }
 .btn-secondary:hover { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(42,127,191,0.25); }
+.btn-gofundme {
+  background: linear-gradient(135deg, #FF6B35, #F5A623);
+  color: #fff; border: 2px solid transparent;
+  box-shadow: 0 4px 20px rgba(245,166,35,0.35);
+  animation: gfmPulse 2.5s ease-in-out infinite;
+}
+.btn-gofundme::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.btn-gofundme:hover::before { opacity: 1; }
+.btn-gofundme:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(245,166,35,0.55); }
+@keyframes gfmPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(245,166,35,0.35); }
+  50% { box-shadow: 0 4px 32px rgba(245,166,35,0.65), 0 0 0 6px rgba(245,166,35,0.12); }
+}
 
 /* ========== HERO ========== */
 .hero {
@@ -1316,6 +1333,7 @@ body::after {
       <a href="#fundraiser">Fundraiser</a>
       <a href="#get-involved">Get Involved</a>
       <a href="#contact">Contact</a>
+      <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff;padding:0.45rem 1.1rem;border-radius:8px;font-weight:700;font-size:0.85rem;white-space:nowrap;transition:all 0.3s;box-shadow:0 2px 12px rgba(245,166,35,0.35);">&#9829; Fund Our Trip</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -1329,6 +1347,7 @@ body::after {
     <a href="#drives">Our Drives</a>
     <a href="#get-involved">Get Involved</a>
     <a href="#contact">Contact</a>
+    <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff !important;padding:0.6rem 1.4rem;border-radius:8px;font-weight:700;text-align:center;margin-top:0.5rem;">&#9829; Fund Our Zimbabwe Trip</a>
   </div>
 </nav>
 
@@ -1346,6 +1365,7 @@ body::after {
     <h1>Giving the Gift of <em>Clear Vision</em></h1>
     <p>We collect eyeglasses from our community and bring them to people around the world who need them most.</p>
     <div class="hero-buttons">
+      <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme">&#9829; Fund Our Zimbabwe Trip</a>
       <a href="#get-involved" class="btn btn-primary">Donate Glasses</a>
       <a href="#mission" class="btn btn-secondary">Learn More</a>
     </div>
@@ -1783,6 +1803,7 @@ body::after {
         </div>
         <div class="drive-expand" id="expand-zimbabwe">
           <p>Summer 2026 marks our most ambitious drive to date. We are heading to Zimbabwe, where access to eye care is severely limited in many rural areas. We're collecting as many glasses as we can and preparing to serve hundreds of people through vision screenings and direct distribution. This trip represents the next chapter in our mission — and we need your help to make it happen. Donate your glasses, volunteer, or spread the word.</p>
+          <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme" style="margin-top:1rem;">&#9829; Support This Trip on GoFundMe</a>
         </div>
         <button class="drive-toggle" onclick="toggleDrive('zimbabwe', event)">
           Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
