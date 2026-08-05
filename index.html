@@ -135,7 +135,7 @@ input, textarea { font-family: 'Inter', sans-serif; }
 .mobile-menu.open a:nth-child(5) { transition-delay: 0.3s; }
 .mobile-menu.open a:nth-child(6) { transition-delay: 0.35s; }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .mobile-menu { display: flex; }
@@ -496,6 +496,20 @@ input, textarea { font-family: 'Inter', sans-serif; }
   .drive-gallery img { height: 90px; }
 }
 
+/* "View more photos" secondary gallery */
+.drive-gallery-extra { display: none; }
+.drive-gallery-extra.open { display: grid; }
+.gallery-more-toggle {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.8rem; background: none; border: none;
+  color: var(--primary); font-weight: 600; font-size: 0.88rem;
+  cursor: pointer; padding: 0.3rem 0;
+}
+.gallery-more-toggle svg { width: 16px; height: 16px; transition: transform 0.3s; }
+.gallery-more-toggle.open svg { transform: rotate(180deg); }
+/* Zimbabwe's expand holds more photos than others, needs more room to open */
+#expand-zimbabwe.open { max-height: 5000px; }
+
 /* Lightbox */
 .lightbox {
   position: fixed; inset: 0; z-index: 99999;
@@ -604,6 +618,21 @@ input, textarea { font-family: 'Inter', sans-serif; }
 }
 .fundraiser-links {
   display: flex; gap: 1rem; flex-wrap: wrap;
+}
+
+/* ========== HER STORY ========== */
+.story-photos {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+}
+.story-photos img {
+  width: 100%; height: 180px; object-fit: cover; border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.story-photos img:first-child { grid-column: 1 / -1; height: 260px; }
+.story-photos img:hover { transform: scale(1.02); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+@media (max-width: 768px) {
+  .story-photos img:first-child { height: 220px; }
 }
 
 /* ========== SECOND FUNDRAISER SEPARATOR ========== */
@@ -1333,7 +1362,7 @@ body::after {
       <a href="#fundraiser">Fundraiser</a>
       <a href="#get-involved">Get Involved</a>
       <a href="#contact">Contact</a>
-      <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff;padding:0.45rem 1.1rem;border-radius:8px;font-weight:700;font-size:0.85rem;white-space:nowrap;transition:all 0.3s;box-shadow:0 2px 12px rgba(245,166,35,0.35);">&#9829; Fund Our Trip</a>
+      <a href="#drives" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff;padding:0.45rem 1.1rem;border-radius:8px;font-weight:700;font-size:0.85rem;white-space:nowrap;transition:all 0.3s;box-shadow:0 2px 12px rgba(245,166,35,0.35);">&#9829; See Zimbabwe Impact</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -1345,9 +1374,10 @@ body::after {
     <a href="#founder">Founder</a>
     <a href="#how-it-works">How It Works</a>
     <a href="#drives">Our Drives</a>
+    <a href="#fundraiser">Fundraiser</a>
     <a href="#get-involved">Get Involved</a>
     <a href="#contact">Contact</a>
-    <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff !important;padding:0.6rem 1.4rem;border-radius:8px;font-weight:700;text-align:center;margin-top:0.5rem;">&#9829; Fund Our Zimbabwe Trip</a>
+    <a href="#drives" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff !important;padding:0.6rem 1.4rem;border-radius:8px;font-weight:700;text-align:center;margin-top:0.5rem;">&#9829; See Zimbabwe Impact</a>
   </div>
 </nav>
 
@@ -1365,7 +1395,7 @@ body::after {
     <h1>Giving the Gift of <em>Clear Vision</em></h1>
     <p>We collect eyeglasses from our community and bring them to people around the world who need them most.</p>
     <div class="hero-buttons">
-      <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme">&#9829; Fund Our Zimbabwe Trip</a>
+      <a href="#drives" class="btn btn-gofundme">&#9829; See Zimbabwe Impact</a>
       <a href="#get-involved" class="btn btn-primary">Donate Glasses</a>
       <a href="#mission" class="btn btn-secondary">Learn More</a>
     </div>
@@ -1396,7 +1426,7 @@ body::after {
     <div class="marquee-item"><span>❤️</span> 2,000+ Lives Impacted</div>
     <div class="marquee-item"><span>🏫</span> Youth-Led & Community-Based</div>
     <div class="marquee-item"><span>📍</span> Based in Lamorinda, CA</div>
-    <div class="marquee-item"><span>✈️</span> Zimbabwe Coming Summer 2026</div>
+    <div class="marquee-item"><span>🇿🇼</span> Zimbabwe — Summer 2026</div>
     <div class="marquee-item"><span>🇮🇳</span> Tiruchengode, India — July 2022</div>
     <div class="marquee-item"><span>🇲🇽</span> Merida, Mexico — July 2025</div>
     <div class="marquee-item"><span>👓</span> 2,000+ Glasses Collected</div>
@@ -1404,7 +1434,7 @@ body::after {
     <div class="marquee-item"><span>❤️</span> 2,000+ Lives Impacted</div>
     <div class="marquee-item"><span>🏫</span> Youth-Led & Community-Based</div>
     <div class="marquee-item"><span>📍</span> Based in Lamorinda, CA</div>
-    <div class="marquee-item"><span>✈️</span> Zimbabwe Coming Summer 2026</div>
+    <div class="marquee-item"><span>🇿🇼</span> Zimbabwe — Summer 2026</div>
     <div class="marquee-item"><span>🇮🇳</span> Tiruchengode, India — July 2022</div>
     <div class="marquee-item"><span>🇲🇽</span> Merida, Mexico — July 2025</div>
   </div>
@@ -1652,16 +1682,9 @@ body::after {
           <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.5s" repeatCount="indefinite"/>
         </path>
         <!-- Lamorinda → Zimbabwe -->
-        <path d="M170,175 Q420,120 545,365" class="flight-path" stroke="url(#pathGrad2)" stroke-width="2.5" opacity="0.5">
+        <path d="M170,175 Q420,120 545,365" class="flight-path" stroke="url(#pathGrad1)" stroke-width="2">
           <animate attributeName="stroke-dashoffset" from="300" to="0" dur="4s" repeatCount="indefinite"/>
         </path>
-
-        <!-- Animated dot on Zimbabwe path -->
-        <g filter="url(#glow)">
-          <circle r="4" fill="#F5A623">
-            <animateMotion dur="5s" repeatCount="indefinite" path="M170,175 Q420,120 545,365"/>
-          </circle>
-        </g>
 
         <!-- ===== LOCATION MARKERS (clickable) ===== -->
         <!-- Lamorinda, CA (home) -->
@@ -1708,24 +1731,18 @@ body::after {
           </g>
         </g>
 
-        <!-- Zimbabwe (upcoming — special styling) -->
+        <!-- Zimbabwe -->
         <g class="map-marker map-marker-clickable" data-target="drive-zimbabwe" transform="translate(545,365)" style="cursor:pointer">
-          <circle r="14" fill="#F5A623" opacity="0.1">
-            <animate attributeName="r" values="14;28;14" dur="2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/>
+          <circle r="10" fill="#2A7FBF" opacity="0.15">
+            <animate attributeName="r" values="8;16;8" dur="2.5s" repeatCount="indefinite" begin="1.6s"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2.5s" repeatCount="indefinite" begin="1.6s"/>
           </circle>
-          <circle r="10" fill="#F5A623" opacity="0.08">
-            <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite" begin="0.3s"/>
-            <animate attributeName="opacity" values="0.15;0;0.15" dur="2s" repeatCount="indefinite" begin="0.3s"/>
-          </circle>
-          <circle class="marker-ring" r="14" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0"/>
-          <circle r="7" fill="#F5A623" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
-          <circle r="2.5" fill="#fff"/>
+          <circle class="marker-ring" r="12" fill="none" stroke="#2A7FBF" stroke-width="1.5" opacity="0"/>
+          <circle r="6" fill="#2A7FBF" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"/>
+          <circle r="2" fill="#fff"/>
           <g class="map-label">
-            <rect x="-56" y="-52" width="112" height="22" rx="6" fill="#e65100" opacity="0.95"/>
-            <text y="-37" text-anchor="middle" fill="#fff" font-size="9" font-weight="800" font-family="Inter, sans-serif" letter-spacing="1">✈ UPCOMING</text>
-            <rect x="-52" y="-30" width="104" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
-            <text y="-15" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter, sans-serif">🇿🇼 Zimbabwe 2026</text>
+            <rect x="-52" y="-32" width="104" height="22" rx="6" fill="#1A2B3C" opacity="0.9"/>
+            <text y="-17" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter, sans-serif">🇿🇼 Zimbabwe 2026</text>
           </g>
         </g>
       </svg>
@@ -1791,19 +1808,55 @@ body::after {
         </button>
       </div>
 
-      <!-- Zimbabwe (Upcoming) -->
-      <div class="drive-card upcoming reveal reveal-delay-3" id="drive-zimbabwe">
+      <!-- Zimbabwe -->
+      <div class="drive-card reveal reveal-delay-3" id="drive-zimbabwe">
+        <div class="drive-hero-wrap">
+          <img src="images/zimbabwe/img-cover.jpeg" alt="Distributing glasses in Zimbabwe">
+          <div class="drive-hero-overlay"></div>
+        </div>
         <div class="drive-card-header">
           <span class="drive-flag">🇿🇼</span>
           <h3>Zimbabwe</h3>
-          <span class="drive-badge badge-upcoming">Summer 2026</span>
+          <span class="drive-badge badge-completed">Summer 2026</span>
         </div>
         <div class="drive-card-body">
-          <p>This summer, we're heading to Zimbabwe to bring clear vision to communities that need it most. Our biggest drive yet.</p>
+          <p>Our biggest drive yet — we traveled to Zimbabwe to bring clear vision to communities that need it most.</p>
+          <a href="#her-story" style="display:inline-block;margin-top:0.5rem;font-size:0.88rem;font-weight:700;color:var(--primary);">Read one girl's story &rarr;</a>
         </div>
         <div class="drive-expand" id="expand-zimbabwe">
-          <p>Summer 2026 marks our most ambitious drive to date. We are heading to Zimbabwe, where access to eye care is severely limited in many rural areas. We're collecting as many glasses as we can and preparing to serve hundreds of people through vision screenings and direct distribution. This trip represents the next chapter in our mission — and we need your help to make it happen. Donate your glasses, volunteer, or spread the word.</p>
-          <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme" style="margin-top:1rem;">&#9829; Support This Trip on GoFundMe</a>
+          <p>Summer 2026 marked our most ambitious drive to date. We traveled to Zimbabwe, where access to eye care is severely limited in many rural areas, and put the glasses collected back home in Lamorinda directly into people's hands through vision screenings and distributions. Thanks to everyone who donated glasses, volunteered, and supported the fundraisers — together we reached hundreds of people. This trip wouldn't have been possible without you.</p>
+          <div class="drive-gallery">
+            <img src="images/zimbabwe/img-1.jpeg" alt="Vision screening in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-2.jpeg" alt="Fitting glasses in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-3.jpeg" alt="Community gathering in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-4.jpeg" alt="Glasses distribution in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-5.jpeg" alt="Team in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-6.jpeg" alt="Community waiting in Zimbabwe" onclick="openLightbox(this.src)">
+          </div>
+          <button class="gallery-more-toggle" id="gallery-more-toggle-zimbabwe" onclick="toggleMoreGallery('zimbabwe', event)">
+            <span>View 18 More Photos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="drive-gallery drive-gallery-extra" id="gallery-extra-zimbabwe">
+            <img src="images/zimbabwe/img-more-1.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-2.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-3.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-4.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-5.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-6.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-7.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-8.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-9.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-10.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-11.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-12.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-13.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-14.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-15.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-16.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-17.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-18.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+          </div>
         </div>
         <button class="drive-toggle" onclick="toggleDrive('zimbabwe', event)">
           Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1817,6 +1870,38 @@ body::after {
 <div class="wave-divider">
   <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
     <path d="M0,60 C150,30 350,50 550,20 C750,0 950,40 1200,25 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
+<!-- Her Story -->
+<section class="section" id="her-story" style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-label reveal">One Story</div>
+    <h2 class="section-title split-reveal">A Story That Needs Your Help</h2>
+    <div class="fundraiser-grid">
+      <div class="fundraiser-details reveal">
+        <p class="fundraiser-desc">During our vision drive in Zimbabwe, a young girl came through our clinic hoping — like everyone else in line — that a pair of glasses would help her see. When our team examined her, it was clear something more serious was going on: a visible protrusion in her eye that no prescription could correct. We're calling her <strong>"Tendai"</strong> here to protect her privacy.</p>
+        <p class="fundraiser-desc">We referred Tendai to specialists, who confirmed that glasses alone can't fix her condition — she needs surgery. The good news is that a free eye surgery program is scheduled for <strong>October 2026</strong>, and there's a place in it for her. The surgery itself is free, but the program depends on community fundraising to cover patients' care and travel costs and to keep taking on cases like hers.</p>
+        <div class="fundraiser-highlight">
+          <p>Tendai isn't the only one. Referrals like hers are why this work matters beyond the glasses we hand out — sometimes the most important thing we can do is notice something is wrong and connect a family to care that can actually help.</p>
+        </div>
+        <div class="fundraiser-links">
+          <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme">&#9829; Help Fund Her Surgery</a>
+        </div>
+      </div>
+      <div class="story-photos reveal reveal-delay-2">
+        <img src="images/zimbabwe/img-story-1.jpeg" alt="Tendai at the Zimbabwe vision clinic" onclick="openLightbox(this.src)">
+        <img src="images/zimbabwe/img-story-2.jpeg" alt="Our team examining Tendai's eye" onclick="openLightbox(this.src)">
+        <img src="images/zimbabwe/img-story-3.jpeg" alt="Tendai being registered at the clinic" onclick="openLightbox(this.src)">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C200,25 400,50 600,30 C800,10 1000,45 1200,20 L1200,60 Z" fill="#fff"/>
   </svg>
 </div>
 
@@ -1844,9 +1929,9 @@ body::after {
             <div class="info-value" style="color: var(--accent);">20%<span>of Sales</span></div>
           </div>
         </div>
-        <p class="fundraiser-desc">Enjoy frozen yogurt at Tangelo FroYo and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Bring your family and friends — every scoop supports our upcoming Zimbabwe vision drive this summer!</p>
+        <p class="fundraiser-desc">Enjoy frozen yogurt at Tangelo FroYo and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Every scoop helped fund our Zimbabwe vision drive!</p>
         <div class="fundraiser-highlight">
-          <p>We've collected 2,000+ pairs of glasses — and our biggest trip to Zimbabwe is this summer. Your support helps us get there.</p>
+          <p>We've collected 2,000+ pairs of glasses — and our biggest trip yet, to Zimbabwe, is complete. Thank you for helping us get there.</p>
         </div>
         <div class="fundraiser-links">
           <a href="#get-involved" class="btn btn-primary">Get Involved</a>
@@ -1935,9 +2020,9 @@ body::after {
             <div class="info-value" style="color:#f4a7c0;">20%<span>of Sales</span></div>
           </div>
         </div>
-        <p class="fundraiser-desc">Grab a scoop at Loards Ice Cream and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Bring your family and friends — every cone counts toward our Zimbabwe vision drive!</p>
+        <p class="fundraiser-desc">Grab a scoop at Loards Ice Cream and <strong>20% of your purchase</strong> goes directly to providing eyeglasses to underserved communities. Every cone helped fund our Zimbabwe vision drive!</p>
         <div class="fundraiser-highlight" style="border-left-color:#f4a7c0;">
-          <p>This Friday, May 29, 1–5 PM — come out, enjoy some ice cream, and help us bring clearer vision to those who need it most.</p>
+          <p>Thanks to everyone who came out for ice cream and helped us bring clearer vision to those who need it most.</p>
         </div>
         <div class="fundraiser-links">
           <a href="#get-involved" class="btn btn-primary">Get Involved</a>
@@ -2045,8 +2130,8 @@ body::after {
             <path d="M13 19 L16 22 L21 15" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 style="color: #FF6B35;">Fund Our Zimbabwe Trip</h3>
-        <p>Our biggest drive yet — Zimbabwe, Summer 2026. Travel costs, supplies, and logistics all need funding. Every dollar gets us closer to serving hundreds of people who need clear vision.</p>
+        <h3 style="color: #FF6B35;">Thanks to You, Zimbabwe Happened</h3>
+        <p>Our biggest drive yet — Zimbabwe, Summer 2026 — is complete, thanks to everyone who donated. Your support funds every future drive, too. Every dollar gets us closer to serving hundreds more people who need clear vision.</p>
         <a href="https://gofund.me/bf1e94d34" target="_blank" rel="noopener" class="btn btn-gofundme">&#9829; Donate on GoFundMe</a>
       </div>
     </div>
@@ -2112,7 +2197,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-dot" style="background: var(--accent); box-shadow: 0 0 12px rgba(61,191,140,0.6);"></div>
           <div class="timeline-year" style="color: var(--accent);">2026</div>
-          <div class="timeline-desc">Upcoming: Zimbabwe vision drive</div>
+          <div class="timeline-desc">Zimbabwe vision drive</div>
         </div>
       </div>
     </div>
@@ -2391,6 +2476,17 @@ function toggleDrive(id, event) {
     expand.classList.add('open');
     card.classList.add('expanded');
   }
+}
+
+function toggleMoreGallery(id, event) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  const gallery = document.getElementById('gallery-extra-' + id);
+  const btn = document.getElementById('gallery-more-toggle-' + id);
+  if (!gallery || !btn) return;
+  const isOpen = gallery.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  const count = gallery.querySelectorAll('img').length;
+  btn.querySelector('span').textContent = isOpen ? 'Show Fewer Photos' : `View ${count} More Photos`;
 }
 
 // ========== CLICKABLE MAP MARKERS ==========
