@@ -73,7 +73,7 @@ input, textarea { font-family: 'Inter', sans-serif; }
   padding: 0.6rem 2rem;
 }
 .nav-inner {
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1400px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; z-index: 100; }
@@ -84,7 +84,7 @@ input, textarea { font-family: 'Inter', sans-serif; }
   font-size: clamp(0.9rem, 1.8vw, 1.1rem); color: var(--dark);
   white-space: nowrap;
 }
-.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links { display: flex; gap: 1.4rem; align-items: center; }
 .nav-links a {
   font-size: 0.9rem; font-weight: 500; color: var(--dark);
   position: relative; transition: color var(--transition);
@@ -533,6 +533,28 @@ input, textarea { font-family: 'Inter', sans-serif; }
   transition: background 0.3s;
 }
 .lightbox-close:hover { background: rgba(255,255,255,0.3); }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: none;
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s;
+}
+.lightbox-nav svg { width: 26px; height: 26px; }
+.lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+.lightbox-prev { left: 1rem; }
+.lightbox-next { right: 1rem; }
+@media (max-width: 600px) {
+  .lightbox-nav { width: 42px; height: 42px; }
+  .lightbox-prev { left: 0.4rem; }
+  .lightbox-next { right: 0.4rem; }
+}
+.lightbox-counter {
+  position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+  color: #fff; font-size: 0.85rem; font-weight: 600;
+  background: rgba(255,255,255,0.15); padding: 0.3rem 0.9rem; border-radius: 20px;
+}
 .drive-toggle {
   display: flex; align-items: center; justify-content: center;
   padding: 0.8rem; font-size: 0.85rem; font-weight: 600;
@@ -633,6 +655,20 @@ input, textarea { font-family: 'Inter', sans-serif; }
 .story-photos img:hover { transform: scale(1.02); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
 @media (max-width: 768px) {
   .story-photos img:first-child { height: 220px; }
+}
+
+.story-photos-duo {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+}
+.story-photos-duo img {
+  width: 100%; height: 320px; object-fit: cover; border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12); cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.story-photos-duo img:hover { transform: scale(1.02); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+@media (max-width: 768px) {
+  .story-photos-duo { grid-template-columns: 1fr; }
+  .story-photos-duo img { height: 240px; }
 }
 
 /* ========== SECOND FUNDRAISER SEPARATOR ========== */
@@ -1362,7 +1398,7 @@ body::after {
       <a href="#fundraiser">Fundraiser</a>
       <a href="#get-involved">Get Involved</a>
       <a href="#contact">Contact</a>
-      <a href="#drives" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff;padding:0.45rem 1.1rem;border-radius:8px;font-weight:700;font-size:0.85rem;white-space:nowrap;transition:all 0.3s;box-shadow:0 2px 12px rgba(245,166,35,0.35);">&#9829; See Zimbabwe Impact</a>
+      <a href="#drives" style="background:linear-gradient(135deg,#FF6B35,#F5A623);color:#fff;padding:0.4rem 0.9rem;border-radius:8px;font-weight:700;font-size:0.82rem;white-space:nowrap;transition:all 0.3s;box-shadow:0 2px 12px rgba(245,166,35,0.35);">&#9829; Zimbabwe Impact</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -1408,7 +1444,7 @@ body::after {
     <div class="stat-divider"></div>
     <div class="stat-item">
       <div class="stat-number" data-target="3">0</div>
-      <div class="stat-label">Countries Reached</div>
+      <div class="stat-label">Continents Reached</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
@@ -1766,14 +1802,14 @@ body::after {
         <div class="drive-expand" id="expand-india">
           <p>In July 2022, I Spy a Good Pair of Eyes partnered with Kathir Eye Hospital and Rotary Club Tiruchengode Red Rock to host a free eye check-up camp. Glasses collected in California were cleaned, sorted, and matched by volunteer optometrists to individuals in need. The drive helped improve the vision — and daily lives — of dozens of local residents.</p>
           <div class="drive-gallery">
-            <img src="images/india/download-7.png" alt="Vision screening" onclick="openLightbox(this.src)">
-            <img src="images/india/download-6.png" alt="Team with patient" onclick="openLightbox(this.src)">
-            <img src="images/india/download-5.png" alt="Glasses display" onclick="openLightbox(this.src)">
-            <img src="images/india/download-4.png" alt="Speaking at the event" onclick="openLightbox(this.src)">
-            <img src="images/india/download-3.png" alt="Community gathering" onclick="openLightbox(this.src)">
-            <img src="images/india/download.png" alt="Glasses distribution" onclick="openLightbox(this.src)">
-            <img src="images/india/download-1.png" alt="Community waiting" onclick="openLightbox(this.src)">
-            <img src="images/india/download-2.png" alt="Fitting glasses" onclick="openLightbox(this.src)">
+            <img src="images/india/download-7.png" alt="Vision screening" onclick="openLightbox(this)">
+            <img src="images/india/download-6.png" alt="Team with patient" onclick="openLightbox(this)">
+            <img src="images/india/download-5.png" alt="Glasses display" onclick="openLightbox(this)">
+            <img src="images/india/download-4.png" alt="Speaking at the event" onclick="openLightbox(this)">
+            <img src="images/india/download-3.png" alt="Community gathering" onclick="openLightbox(this)">
+            <img src="images/india/download.png" alt="Glasses distribution" onclick="openLightbox(this)">
+            <img src="images/india/download-1.png" alt="Community waiting" onclick="openLightbox(this)">
+            <img src="images/india/download-2.png" alt="Fitting glasses" onclick="openLightbox(this)">
           </div>
         </div>
         <button class="drive-toggle" onclick="toggleDrive('india', event)">
@@ -1798,9 +1834,9 @@ body::after {
         <div class="drive-expand" id="expand-mexico">
           <p>In July 2025, I Spy a Good Pair of Eyes partnered with the Merida Foundation to distribute donated eyeglasses and provide free vision screenings. Glasses collected in California were cleaned, sorted, and matched by volunteers to individuals in need. The drive helped improve the vision — and daily lives — of dozens of local residents.</p>
           <div class="drive-gallery">
-            <img src="images/mexico/download-2.png" alt="Merida Foundation table" onclick="openLightbox(this.src)">
-            <img src="images/mexico/download-1.png" alt="Volunteers sorting glasses" onclick="openLightbox(this.src)">
-            <img src="images/mexico/download.png" alt="Community lining up" onclick="openLightbox(this.src)">
+            <img src="images/mexico/download-2.png" alt="Merida Foundation table" onclick="openLightbox(this)">
+            <img src="images/mexico/download-1.png" alt="Volunteers sorting glasses" onclick="openLightbox(this)">
+            <img src="images/mexico/download.png" alt="Community lining up" onclick="openLightbox(this)">
           </div>
         </div>
         <button class="drive-toggle" onclick="toggleDrive('mexico', event)">
@@ -1821,41 +1857,42 @@ body::after {
         </div>
         <div class="drive-card-body">
           <p>Our biggest drive yet — we traveled to Zimbabwe to bring clear vision to communities that need it most.</p>
-          <a href="#her-story" style="display:inline-block;margin-top:0.5rem;font-size:0.88rem;font-weight:700;color:var(--primary);">Read one girl's story &rarr;</a>
+          <a href="#her-story" style="display:inline-block;margin-top:0.5rem;font-size:0.88rem;font-weight:700;color:var(--primary);">Read one girl's story &rarr;</a><br>
+          <a href="#his-story" style="display:inline-block;margin-top:0.3rem;font-size:0.88rem;font-weight:700;color:var(--primary);">Read Farai's story &rarr;</a>
         </div>
         <div class="drive-expand" id="expand-zimbabwe">
           <p>Summer 2026 marked our most ambitious drive to date. We traveled to Zimbabwe, where access to eye care is severely limited in many rural areas, and put the glasses collected back home in Lamorinda directly into people's hands through vision screenings and distributions. Thanks to everyone who donated glasses, volunteered, and supported the fundraisers — together we reached hundreds of people. This trip wouldn't have been possible without you.</p>
           <div class="drive-gallery">
-            <img src="images/zimbabwe/img-1.jpeg" alt="Vision screening in Zimbabwe" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-2.jpeg" alt="Fitting glasses in Zimbabwe" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-3.jpeg" alt="Community gathering in Zimbabwe" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-4.jpeg" alt="Glasses distribution in Zimbabwe" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-5.jpeg" alt="Team in Zimbabwe" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-6.jpeg" alt="Community waiting in Zimbabwe" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-1.jpeg" alt="Vision screening in Zimbabwe" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-2.jpeg" alt="Fitting glasses in Zimbabwe" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-3.jpeg" alt="Community gathering in Zimbabwe" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-4.jpeg" alt="Glasses distribution in Zimbabwe" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-5.jpeg" alt="Team in Zimbabwe" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-6.jpeg" alt="Community waiting in Zimbabwe" onclick="openLightbox(this)">
           </div>
           <button class="gallery-more-toggle" id="gallery-more-toggle-zimbabwe" onclick="toggleMoreGallery('zimbabwe', event)">
             <span>View 18 More Photos</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="drive-gallery drive-gallery-extra" id="gallery-extra-zimbabwe">
-            <img src="images/zimbabwe/img-more-1.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-2.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-3.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-4.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-5.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-6.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-7.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-8.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-9.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-10.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-11.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-12.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-13.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-14.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-15.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-16.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-17.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
-            <img src="images/zimbabwe/img-more-18.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this.src)">
+            <img src="images/zimbabwe/img-more-1.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-2.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-3.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-4.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-5.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-6.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-7.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-8.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-9.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-10.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-11.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-12.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-13.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-14.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-15.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-16.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-17.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
+            <img src="images/zimbabwe/img-more-18.jpeg" alt="Zimbabwe vision drive photo" onclick="openLightbox(this)">
           </div>
         </div>
         <button class="drive-toggle" onclick="toggleDrive('zimbabwe', event)">
@@ -1890,9 +1927,40 @@ body::after {
         </div>
       </div>
       <div class="story-photos reveal reveal-delay-2">
-        <img src="images/zimbabwe/img-story-1.jpeg" alt="Tendai at the Zimbabwe vision clinic" onclick="openLightbox(this.src)">
-        <img src="images/zimbabwe/img-story-2.jpeg" alt="Our team examining Tendai's eye" onclick="openLightbox(this.src)">
-        <img src="images/zimbabwe/img-story-3.jpeg" alt="Tendai being registered at the clinic" onclick="openLightbox(this.src)">
+        <img src="images/zimbabwe/img-story-1.jpeg" alt="Tendai at the Zimbabwe vision clinic" onclick="openLightbox(this)">
+        <img src="images/zimbabwe/img-story-2.jpeg" alt="Our team examining Tendai's eye" onclick="openLightbox(this)">
+        <img src="images/zimbabwe/img-story-3.jpeg" alt="Tendai being registered at the clinic" onclick="openLightbox(this)">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave Divider -->
+<div class="wave-divider wave-divider-flip">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,60 C200,25 400,50 600,30 C800,10 1000,45 1200,20 L1200,60 Z" fill="#F0F4F8"/>
+  </svg>
+</div>
+
+<!-- His Story -->
+<section class="section" id="his-story" style="background:var(--light-gray);">
+  <div class="section-inner">
+    <div class="section-label reveal">Another Story</div>
+    <h2 class="section-title split-reveal">Four Years, Held Together by Wire</h2>
+    <div class="fundraiser-grid">
+      <div class="story-photos-duo reveal">
+        <img src="images/zimbabwe/wired-1.jpeg" alt="A pair of glasses repaired with a length of wire at the hinge" onclick="openLightbox(this)">
+        <img src="images/zimbabwe/wired-2.jpeg" alt="The man receiving his new glasses from our team" onclick="openLightbox(this)">
+      </div>
+      <div class="fundraiser-details reveal reveal-delay-2">
+        <p class="fundraiser-desc">At one of our stations in Zimbabwe, we met an older man — we're calling him <strong>"Farai"</strong> here — who had been wearing the same pair of glasses for four years. Long before we met him, the frame had cracked at the hinge. There was no optician nearby he could reach, and no way to afford a replacement even if there were. So he did the only thing he could: he found a length of wire, bent it by hand, and wound it tightly around the broken joint to hold the two halves together.</p>
+        <p class="fundraiser-desc">It worked, in the sense that the glasses stayed on his face. But a wire hinge doesn't stay tight. It loosens. It slips. It has to be re-wound, again and again, and every readjustment left the lenses sitting a little more crooked than before. For four years, he saw the world through glasses that fit a little worse each day — not because he didn't care for them, but because there was simply nothing better within reach.</p>
+        <div class="fundraiser-highlight">
+          <p>Farai's story isn't unusual here — it's exactly why this drive exists. For every person we fit with new glasses, there is likely another still making do with a broken pair, holding it together with whatever they can find, because access — not need — is the real barrier. When we handed Farai a working pair of glasses, wire-free, it wasn't a small thing. It was four years overdue.</p>
+        </div>
+        <div class="fundraiser-links">
+          <a href="#get-involved" class="btn btn-gofundme">&#9829; Help Us Reach the Next Person Like Farai</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2266,7 +2334,14 @@ body::after {
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" onclick="lightboxNav(-1, event)" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
   <img id="lightbox-img" src="" alt="Full size photo">
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" onclick="lightboxNav(1, event)" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
 <!-- Footer -->
@@ -2527,17 +2602,41 @@ document.querySelectorAll('.map-marker-clickable').forEach(marker => {
 });
 
 // ========== LIGHTBOX ==========
-function openLightbox(src) {
-  const lb = document.getElementById('lightbox');
-  document.getElementById('lightbox-img').src = src;
-  lb.classList.add('active');
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+function openLightbox(imgEl) {
+  const gallery = imgEl.closest('.drive-gallery, .story-photos, .story-photos-duo');
+  lightboxImages = gallery ? Array.from(gallery.querySelectorAll('img')).map(img => img.src) : [imgEl.src];
+  lightboxIndex = Math.max(0, lightboxImages.indexOf(imgEl.src));
+  renderLightboxImage();
+  document.getElementById('lightbox').classList.add('active');
   document.body.style.overflow = 'hidden';
+}
+function renderLightboxImage() {
+  document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
+  const multi = lightboxImages.length > 1;
+  document.getElementById('lightbox-counter').textContent = multi ? `${lightboxIndex + 1} / ${lightboxImages.length}` : '';
+  document.getElementById('lightbox-prev').style.display = multi ? 'flex' : 'none';
+  document.getElementById('lightbox-next').style.display = multi ? 'flex' : 'none';
+}
+function lightboxNav(dir, e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  lightboxIndex = (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+  renderLightboxImage();
 }
 function closeLightbox(e) {
   if (e.target === document.getElementById('lightbox-img')) return;
   document.getElementById('lightbox').classList.remove('active');
   document.body.style.overflow = '';
 }
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('active')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  else if (e.key === 'ArrowLeft') lightboxNav(-1);
+  else if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = ''; }
+});
 
 // ========== CONTACT FORM ==========
 document.getElementById('contact-form').addEventListener('submit', (e) => {
